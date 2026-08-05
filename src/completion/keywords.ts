@@ -1,0 +1,58 @@
+// completion/keywords.ts —— SQL 关键字常量
+
+// SQL 关键字列表
+export const SQL_KEYWORDS = [
+  // DML
+  'SELECT', 'FROM', 'WHERE', 'INSERT', 'UPDATE', 'DELETE', 'INTO', 'VALUES', 'SET',
+  // DDL
+  'CREATE', 'ALTER', 'DROP', 'TABLE', 'DATABASE', 'INDEX', 'VIEW', 'TRIGGER',
+  'FUNCTION', 'PROCEDURE', 'SCHEMA', 'COLUMN', 'ADD', 'MODIFY', 'RENAME', 'TO',
+  // DCL
+  'GRANT', 'REVOKE', 'PRIVILEGES', 'ON', 'TO', 'FROM', 'ALL',
+  // TCL
+  'COMMIT', 'ROLLBACK', 'SAVEPOINT', 'TRANSACTION', 'BEGIN', 'END',
+  // 查询修饰符
+  'DISTINCT', 'ALL', 'AS', 'AND', 'OR', 'NOT', 'NULL', 'IS', 'IN', 'EXISTS',
+  'BETWEEN', 'LIKE', 'ESCAPE', 'LIMIT', 'OFFSET', 'TOP',
+  // JOIN
+  'JOIN', 'INNER', 'LEFT', 'RIGHT', 'FULL', 'OUTER', 'CROSS', 'NATURAL', 'ON',
+  'USING',
+  // 聚合
+  'GROUP', 'BY', 'HAVING', 'ORDER', 'ASC', 'DESC',
+  // 条件
+  'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'IF', 'ELSEIF', 'WHILE', 'LOOP',
+  // 其他
+  'UNION', 'INTERSECT', 'EXCEPT', 'WITH', 'RECURSIVE', 'OVER', 'PARTITION',
+  'ROWS', 'RANGE', 'PRECEDING', 'FOLLOWING', 'CURRENT', 'ROW',
+  // MySQL 特有
+  'SHOW', 'DESCRIBE', 'DESC', 'EXPLAIN', 'USE', 'CHANGE', 'MASTER', 'SLAVE',
+  'START', 'STOP', 'RESET', 'PURGE', 'FLUSH', 'KILL', 'CALL', 'DELIMITER',
+  // 约束
+  'PRIMARY', 'KEY', 'FOREIGN', 'REFERENCES', 'UNIQUE', 'CHECK', 'DEFAULT',
+  'AUTO_INCREMENT', 'NOT NULL', 'CASCADE', 'RESTRICT', 'NO ACTION',
+  // 引擎和字符集
+  'ENGINE', 'CHARSET', 'COLLATE', 'CHARACTER', 'SET', 'COMMENT',
+];
+
+// SQL 数据类型
+export const SQL_DATA_TYPES = [
+  // 整数类型
+  'INT', 'INTEGER', 'BIGINT', 'SMALLINT', 'TINYINT', 'MEDIUMINT',
+  // 浮点类型
+  'DECIMAL', 'NUMERIC', 'FLOAT', 'DOUBLE', 'REAL',
+  // 字符串类型
+  'CHAR', 'VARCHAR', 'TEXT', 'TINYTEXT', 'MEDIUMTEXT', 'LONGTEXT',
+  'BLOB', 'TINYBLOB', 'MEDIUMBLOB', 'LONGBLOB', 'BINARY', 'VARBINARY',
+  // 日期时间类型
+  'DATE', 'DATETIME', 'TIMESTAMP', 'TIME', 'YEAR',
+  // 其他类型
+  'BOOLEAN', 'BOOL', 'ENUM', 'SET', 'JSON', 'BIT', 'GEOMETRY',
+];
+
+// 存储过程和函数关键字
+export const ROUTINE_KEYWORDS = [
+  'DECLARE', 'SET', 'RETURN', 'RETURNS', 'DETERMINISTIC', 'NOT DETERMINISTIC',
+  'READS SQL DATA', 'MODIFIES SQL DATA', 'NO SQL', 'CONTAINS SQL',
+  'IN', 'OUT', 'INOUT', 'EXIT', 'CONTINUE', 'HANDLER', 'FOR',
+  'SQLEXCEPTION', 'SQLWARNING', 'NOT FOUND',
+];
