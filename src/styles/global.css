@@ -1,0 +1,123 @@
+/* src/styles/global.css —— V2 唯一的 CSS 文件 */ /* === 1. Blueprint CSS 引入（不可省略） === */ @import "@blueprintjs/core/lib/css/blueprint.css";
+ @import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+ @import "./themes/light.css";
+ @import "./themes/dark.css";
+ /* === 2. Tailwind 入口（已启用 preflight） === */ 
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+ /* === 5.7 全局滚动条（迁移自 main-layout.css） === */ ::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bp5-divider-black); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bp5-text-color-muted); }
+/* === 5.8 树控件覆盖（迁移自 main-layout.css，未分层压过 blueprint） === */ .bp5-tree-node-content { height: 28px !important; padding: 0 8px !important; }
+.bp5-tree-node-caret { color: var(--bp5-icon-color) !important; }
+.bp5-tree-node-label { font-size: 13px; }
+/* 系统数据库节点 - 亮色 */ .metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.system-db-node > .bp5-tree-node-content, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.system-db-node > .bp6-tree-node-content { background-color: #fff4cc !important; color: #c08a00 !important; font-family: "Microsoft YaHei", "微软雅黑", sans-serif; font-weight: 600; }
+.metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.system-db-node > .bp5-tree-node-content .bp5-tree-node-label, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.system-db-node > .bp6-tree-node-content .bp6-tree-node-label, .metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.system-db-node > .bp5-tree-node-content .bp5-tree-node-caret, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.system-db-node > .bp6-tree-node-content .bp6-tree-node-caret { color: #c08a00 !important; font-family: "Microsoft YaHei", "微软雅黑", sans-serif; }
+/* 系统数据库节点 - 暗色 */ .metadata-tree.bp5-dark .metadata-tree-inner .bp5-tree-node.system-db-node > .bp5-tree-node-content, .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.system-db-node > .bp6-tree-node-content { background-color: #6f5500; color: #ffd45a; font-family: "Microsoft YaHei", "微软雅黑", sans-serif; font-weight: 600; }
+.metadata-tree.bp5-dark .metadata-tree-inner .bp5-tree-node.system-db-node .bp5-tree-node-label, .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.system-db-node .bp6-tree-node-label, .metadata-tree.bp5-dark .metadata-tree-inner .bp5-tree-node.system-db-node .bp5-tree-node-caret, .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.system-db-node .bp6-tree-node-caret { color: #ffd45a !important; font-family: "Microsoft YaHei", "微软雅黑", sans-serif; }
+/* 树节点选中态 */ .metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.bp5-tree-node-selected > .bp5-tree-node-content, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content, .metadata-tree.bp5-light .metadata-tree-inner [class*="tree-node"][class*="selected"] > [class*="tree-node-content"] { background-color: #e3f2fd !important; color: var(--bp5-text-color) !important; }
+.metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.bp5-tree-node-selected .bp5-tree-node-label, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected .bp6-tree-node-label, .metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.bp5-tree-node-selected .bp5-tree-node-caret, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected .bp6-tree-node-caret { color: var(--bp5-text-color) !important; fill: currentColor !important; }
+.metadata-tree.bp5-light .metadata-tree-inner .bp5-tree-node.bp5-tree-node-selected > .bp5-tree-node-content:hover, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content:hover, .metadata-tree.bp5-light .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content:active { background-color: #d7ebfc !important; }
+.metadata-tree.bp5-dark .metadata-tree-inner .bp5-tree-node.bp5-tree-node-selected > .bp5-tree-node-content, .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content, .metadata-tree.bp5-dark .metadata-tree-inner [class*="tree-node"][class*="selected"] > [class*="tree-node-content"], .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content:hover, .metadata-tree.bp5-dark .metadata-tree-inner .bp6-tree-node.bp6-tree-node-selected > .bp6-tree-node-content:active { background-color: var(--bp5-menu-background-color-active) !important; color: var(--bp5-text-color) !important; }
+/* 元数据树容器基础样式（迁移自 main-layout.css） */ .metadata-tree { height: 100%; overflow: auto; }
+.metadata-tree-inner { padding: 4px 0; }
+.metadata-tree-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; text-align: center; color: var(--bp5-text-color-muted); }
+.metadata-tree-empty .hint { font-size: 12px; margin-top: 8px; }
+/* === 5.5 PreviewCommitDialog BP6 内部元素覆盖（未分层：必须压过 blueprint.css 未分层规则） === */ .preview-tabs .bp6-tab-list { padding: 0 16px; background-color: #f6f7f9; border-bottom: 1px solid #e1e5e9; flex-shrink: 0; }
+.preview-tabs .bp6-tab-panel { flex: 1; min-height: 0; overflow: hidden; margin-top: 0; }
+html.bp6-dark .preview-tabs .bp6-tab-list { background-color: #1c2127; border-bottom-color: #3e3e42; }
+/* PreviewCommitDialog 滚动条（迁移自 preview-commit-dialog.css） */ /* ViewDesignerTab Monaco 内部覆盖（迁移自 view-designer-tab.css） */ .view-designer-sql-editor .monaco-editor { padding: 0; }
+.view-designer-sql-editor .monaco-editor .margin { background-color: transparent; }
+/* UserTab / DatabaseObjectTab 表格滚动条（迁移自 user-tab.css / database-object-tab.css） */ .user-table-wrapper::-webkit-scrollbar, .database-object-table-wrapper::-webkit-scrollbar { width: 10px; height: 10px; }
+.user-table-wrapper::-webkit-scrollbar-track, .database-object-table-wrapper::-webkit-scrollbar-track { background: transparent; }
+.user-table-wrapper::-webkit-scrollbar-thumb, .database-object-table-wrapper::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.4); border-radius: 4px; }
+.user-table-wrapper::-webkit-scrollbar-thumb:hover, .database-object-table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(128, 128, 128, 0.6); }
+/* UserEditorTab BP6 内部元素覆盖（未分层：必须压过 blueprint.css 未分层规则） */ .user-editor-tabs > .bp6-tab-list { padding: 0 16px; background-color: #f5f6f7; border-bottom: 1px solid #e1e5e9; flex-shrink: 0; }
+.user-editor-tabs > .bp6-tab-panel { flex: 1; min-height: 0; margin-top: 0; overflow: hidden; }
+/* 仅对"当前可见"的 panel 应用 flex 列布局； 隐藏 panel 必须保留 BP6 的 display:none（否则四个 tab 会全部堆叠显示） */ .user-editor-tabs > .bp6-tab-panel:not([aria-hidden="true"]) { display: flex; flex-direction: column; }
+html.bp6-dark .user-editor-tabs > .bp6-tab-list { background-color: #252a31; border-bottom-color: #3e3e42; }
+/* UserEditorTab 权限表格内 Checkbox 去默认 margin */ .filter-input input { border: none !important; background: transparent !important; box-shadow: none !important; padding-left: 4px !important; }
+/* 表/视图数据页表格滚动条（迁移自 table-data-tab.css） */ .table-data-wrapper::-webkit-scrollbar { width: 10px; height: 10px; }
+.table-data-wrapper::-webkit-scrollbar-track { background: transparent; }
+.table-data-wrapper::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.4); border-radius: 4px; }
+.table-data-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(128, 128, 128, 0.6); }
+/* QueryTab 结果区折叠时编辑器占满（内联 style 需 !important 覆盖，迁移自 query-tab.css） */ .query-tab-content.result-collapsed .query-editor-container { flex: 1 !important; height: 100% !important; }
+/* 查询结果表滚动条（迁移自 query-tab.css） */ .result-table-wrapper::-webkit-scrollbar { width: 10px; height: 10px; }
+.result-table-wrapper::-webkit-scrollbar-track { background: transparent; }
+.result-table-wrapper::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.4); border-radius: 4px; }
+.result-table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(128, 128, 128, 0.6); }
+/* DesignerTab BP6 内部元素覆盖（未分层：必须压过 blueprint.css 未分层规则） */ .designer-content .bp6-tab-list { padding: 0 12px; border-bottom: 1px solid #e1e5e9; flex-shrink: 0; }
+.designer-content .bp6-tab-panel { flex: 1; min-height: 0; overflow: auto; margin-top: 0; }
+/* 仅对"当前可见"的 panel 应用 flex 列布局（隐藏 panel 保留 BP6 display:none） */ .designer-content .bp6-tab-panel:not([aria-hidden="true"]) { display: flex; flex-direction: column; }
+html.bp6-dark .designer-content .bp6-tab-list { border-bottom-color: #3e3e42; }
+/* 主标签页 BP6 内部覆盖（迁移自 main-layout.css） */ .main-tabs > .bp6-tab-panel { flex: 1; min-height: 0; margin-top: 0; overflow: hidden; }
+/* 仅"当前可见"的 panel 应用 flex（隐藏 panel 保留 BP6 display:none） */ .main-tabs > .bp6-tab-panel:not([aria-hidden="true"]) { display: flex; }
+.main-tabs > .bp6-tab-panel > * { flex: 1; min-height: 0; }
+.main-tabs .bp6-tab-list { background-color: #f3f3f3; border-bottom: 1px solid #e0e0e0; padding: 6px 8px 0; overflow-x: auto; overflow-y: hidden; display: flex; align-items: flex-end; gap: 4px; min-height: 42px; }
+html.bp6-dark .main-tabs .bp6-tab-list { background-color: #1e1e1e; border-bottom-color: #3e3e42; }
+.main-tabs .bp6-tab-list::-webkit-scrollbar { height: 4px; }
+.main-tabs .bp6-tab-list::-webkit-scrollbar-track { background: transparent; }
+.main-tabs .bp6-tab-list::-webkit-scrollbar-thumb { background: var(--bp5-divider-black); border-radius: 2px; }
+.main-tabs .bp6-tab { display: flex; align-items: center; height: 34px; padding: 0 12px; font-size: 13px; font-weight: 400; color: var(--bp5-text-color-muted); background-color: transparent; border: none; border-radius: 6px 6px 0 0; margin: 0; transition: all 0.2s ease; position: relative; flex-shrink: 0; cursor: pointer; }
+.main-tabs .bp6-tab:not([aria-selected="true"]):hover { background-color: rgba(128, 128, 128, 0.08); color: var(--bp5-text-color); }
+.main-tabs .bp6-tab[aria-selected="true"] { font-weight: 500; color: var(--bp5-intent-primary); background-color: rgba(0, 122, 204, 0.12); }
+.main-tabs .bp6-tab[aria-selected="true"]:hover { color: var(--bp5-text-color); }
+/* 关闭按钮显示逻辑（悬停/激活/模式） */ .main-tabs .bp6-tab:hover .tab-close-btn { opacity: 0.6; visibility: visible; }
+.main-tabs .bp6-tab[aria-selected="true"] .tab-close-btn { opacity: 0.7; visibility: visible; }
+.tab-close-mode-hover .tab-close-btn { opacity: 0; visibility: hidden; }
+.tab-close-mode-always .tab-close-btn { opacity: 0.6; visibility: visible; }
+.tab-close-mode-always .tab-close-btn:hover { opacity: 1 !important; }
+/* Tab 类型图标颜色（迁移自 main-layout.css） */ .tab-icon-query { color: var(--bp5-text-color-muted); }
+.tab-icon-table { color: #4a90d9; }
+.tab-icon-view { color: #9b59b6; }
+.tab-icon-function { color: #27ae60; }
+.tab-icon-designer { color: #e67e22; }
+.tab-icon-user { color: var(--bp5-text-color-muted); }
+.tab-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0.85; }
+/* 主工具栏按钮交互状态 */ .toolbar-btn { transition: all 0.15s ease; }
+.toolbar-btn:hover { border-color: #007acc; background-color: rgba(0, 122, 204, 0.10); color: #007acc; }
+.toolbar-btn:active:hover { border-color: #007acc; background-color: rgba(0, 122, 204, 0.18); color: #007acc; }
+/* 按住但鼠标移出按钮：略微放大 */ .toolbar-btn:active:not(:hover) { transform: scale(1.05); border-color: rgba(0, 122, 204, 0.4); background-color: rgba(0, 122, 204, 0.08); }
+/* 菜单栏更新红点（迁移自 components/layout/MenuBar.css） */ .menu-dot-indicator { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background-color: #f5c842; border-radius: 50%; box-shadow: 0 0 4px rgba(245, 200, 66, 0.6); animation: pulse 2s ease-in-out infinite; }
+.menu-item-with-dot { display: inline-flex; align-items: center; gap: 8px; }
+.menu-item-with-dot .update-dot { width: 8px; height: 8px; background-color: #f5c842; border-radius: 50%; box-shadow: 0 0 4px rgba(245, 200, 66, 0.6); animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+/* 关闭按钮（迁移自 main-layout.css，含 BP 尺寸 !important 覆盖） */ .tab-close-btn { display: flex; align-items: center; justify-content: center; width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; padding: 0 !important; margin-left: 4px; border-radius: 50% !important; opacity: 0; visibility: hidden; transition: all 0.15s ease; flex-shrink: 0; }
+.tab-close-btn:hover { opacity: 1 !important; background-color: var(--bp5-intent-danger) !important; color: white !important; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.1); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes options-dialog-fade-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes setting-item-fade-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes options-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes properties-dialog-fade-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes property-item-fade-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+/* === 5. 全局基础样式（preflight 已覆盖 margin / padding / box-sizing / font-family） === */ html, body, #root { height: 100%; width: 100%; }
+html, body { overflow: hidden; }
+body { font-size: 14px; user-select: none; -webkit-user-select: none; background-color: var(--page-bg, #ffffff); }
+input, textarea, [contenteditable="true"], .allow-select, .monaco-editor, .monaco-editor * { user-select: text; -webkit-user-select: text; }
+button, [role="button"], .bp6-button, .bp6-menu-item, .bp6-tab, .bp6-tree-node-label { user-select: none; -webkit-user-select: none; }
+/* === 7. @layer components —— BP6 全局覆盖（深度选择器，无法用 utility 表达） === */ 
+@layer components { .bp6-tree-node-label { @apply truncate; } /* Options Dialog BP6 覆盖 */ .options-dialog .bp6-dialog { @apply p-0 rounded-lg overflow-hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid var(--bp6-divider-black, #ccc); } .options-dialog .bp6-dialog-header, .options-dialog .bp6-dialog-footer { @apply hidden; } .options-dialog .bp6-dialog-body { @apply p-0 m-0; background-color: var(--bp6-app-background-color); } /* Options Dialog 滚动条 */ .options-scrollable::-webkit-scrollbar { width: 8px; } .options-scrollable::-webkit-scrollbar-track { background: transparent; } .options-scrollable::-webkit-scrollbar-thumb { background: var(--bp6-divider-black, #ccc); border-radius: 4px; } .options-scrollable::-webkit-scrollbar-thumb:hover { background: var(--bp6-text-color-muted, #888); } .options-switch { @apply relative inline-block cursor-pointer shrink-0; width: 44px; height: 24px; } .options-switch input { @apply opacity-0 absolute w-0 h-0; } .options-switch-slider { @apply absolute inset-0 rounded-full transition-colors duration-200; background-color: var(--options-switch-bg); } .options-switch-slider::before { content: ''; @apply absolute rounded-full transition-transform duration-200; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); } .options-switch input:checked + .options-switch-slider { background-color: var(--options-switch-active); } .options-switch input:checked + .options-switch-slider::before { transform: translateX(20px); } /* Options Dialog NumericInput 覆盖 */ .options-numeric .bp6-input-group { @apply w-20; } .options-numeric .bp6-input { @apply h-8 px-2.5 text-sm text-center rounded-md; background-color: var(--options-input-bg); border: 1px solid var(--options-input-border); color: var(--options-input-text); } .options-numeric .bp6-input:focus { border-color: var(--bp6-intent-primary, #007acc); box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2); } .options-numeric .bp6-button-group { @apply hidden; } /* Options Dialog Select 覆盖 */ .options-select select { @apply h-8 px-3 pr-7 text-sm rounded-md cursor-pointer appearance-none; background-color: var(--options-input-bg); border: 1px solid var(--options-input-border); color: var(--options-input-text); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; background-size: 12px; } .options-select select:focus { border-color: var(--bp6-intent-primary, #007acc); box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2); outline: none; } /* Options Dialog Callout 覆盖 */ .options-callout.bp6-callout { background-color: var(--options-callout-bg); border: 1px solid var(--options-callout-border); box-shadow: none; } .options-callout.bp6-intent-primary { background-color: rgba(0, 122, 204, 0.1); border-color: rgba(0, 122, 204, 0.3); } .options-callout.bp6-intent-primary .bp6-callout-icon { color: var(--bp6-intent-primary, #007acc); } /* Properties Dialog BP6 覆盖 */ .properties-dialog .bp6-dialog { @apply p-0 rounded-lg overflow-hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid var(--bp6-divider-black, #ccc); } .properties-dialog .bp6-dialog-header, .properties-dialog .bp6-dialog-footer { @apply hidden; } .properties-dialog .bp6-dialog-body { @apply p-0 m-0; background-color: var(--bp6-app-background-color); } /* Properties Dialog Callout 覆盖 */ .properties-callout.bp6-callout { background-color: var(--properties-callout-bg); border: 1px solid var(--properties-callout-border); box-shadow: none; } .properties-callout.bp6-intent-warning { background-color: rgba(255, 152, 0, 0.1); border-color: rgba(255, 152, 0, 0.3); } .properties-callout.bp6-intent-warning .bp6-callout-icon { color: var(--bp6-intent-warning, #f5a623); } .properties-callout.bp6-intent-primary { background-color: rgba(0, 122, 204, 0.1); border-color: rgba(0, 122, 204, 0.3); } .properties-callout.bp6-intent-primary .bp6-callout-icon { color: var(--bp6-intent-primary, #007acc); } /* Properties Dialog 滚动条 */ .properties-scrollable::-webkit-scrollbar { width: 8px; } .properties-scrollable::-webkit-scrollbar-track { background: transparent; } .properties-scrollable::-webkit-scrollbar-thumb { background: var(--bp6-divider-black, #ccc); border-radius: 4px; } .properties-scrollable::-webkit-scrollbar-thumb:hover { background: var(--bp6-text-color-muted, #888); } }
+.bp6-button.query-toolbar-btn {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  min-height: 24px;
+  font-size: 14px;
+}
+.bp6-button .bp6-button-text {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+}

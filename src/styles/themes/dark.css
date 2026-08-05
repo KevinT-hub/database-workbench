@@ -1,0 +1,79 @@
+/* 暗色主题变量（由 global.css @import 引入，主题切换类挂在 html 上） */
+html.bp5-dark,
+html.bp6-dark {
+  --app-bg: #2f343c;
+  --app-text: #f5f8fa;
+  --page-bg: #2f343c;
+  --toolbar-bg: #1c2127;
+  --statusbar-bg: #1c2127;
+
+  --options-sidebar-bg: #252526;
+  --options-sidebar-border: #3e3e42;
+  --options-nav-active-bg: #094771;
+  --options-nav-active-text: #f5f8fa;
+  --options-group-divider: #3e3e42;
+  --options-item-bg: #1e1e1e;
+  --options-item-hover: #2d2d30;
+  --options-input-bg: #3c3c3c;
+  --options-input-border: #555;
+  --options-input-text: #cccccc;
+  --options-card-bg: #2d2d30;
+  --options-card-border: #3e3e42;
+  --options-callout-bg: #2d2d30;
+  --options-callout-border: #3e3e42;
+  --options-switch-bg: #555;
+
+  --properties-sidebar-bg: #252526;
+  --properties-sidebar-border: #3e3e42;
+  --properties-nav-active-bg: #094771;
+  --properties-nav-active-text: #f5f8fa;
+  --properties-nav-hover-bg: #3e3e42;
+  --properties-nav-text: #f5f8fa;
+  --properties-nav-text-muted: #a7b6c2;
+  --properties-content-border: #3e3e42;
+  --properties-group-bg: #1e1e1e;
+  --properties-group-border: #3e3e42;
+  --properties-item-border: #3e3e42;
+  --properties-item-hover: #3e3e42;
+  --properties-callout-bg: #2d2d30;
+  --properties-callout-border: #3e3e42;
+}
+
+html.bp5-dark,
+html.bp5-dark body,
+html.bp6-dark,
+html.bp6-dark body {
+  background-color: #2f343c;
+  color: #f5f8fa;
+  --page-bg: #2f343c;
+}
+
+.bp6-dark {
+  --bp6-app-background-color: #1e1e1e;
+  --bp6-menu-background-color: #2d2d30;
+  --bp6-menu-background-color-hover: #3e3e42;
+  --bp6-menu-background-color-active: #094771;
+  --bp6-divider-black: #3e3e42;
+  --bp6-text-color: #cccccc;
+  --bp6-text-color-muted: #858585;
+  --bp6-icon-color: #c5c5c5;
+  --bp6-intent-primary: #007acc;
+  --bp6-intent-success: #4caf50;
+  --bp6-intent-warning: #ff9800;
+  --bp6-intent-danger: #f44336;
+}
+
+.bp5-dark {
+  --bp5-app-background-color: #1e1e1e;
+  --bp5-menu-background-color: #2d2d30;
+  --bp5-menu-background-color-hover: #3e3e42;
+  --bp5-menu-background-color-active: #094771;
+  --bp5-divider-black: #3e3e42;
+  --bp5-text-color: #cccccc;
+  --bp5-text-color-muted: #858585;
+  --bp5-icon-color: #c5c5c5;
+  --bp5-intent-primary: #007acc;
+  --bp5-intent-success: #4caf50;
+  --bp5-intent-warning: #ff9800;
+  --bp5-intent-danger: #f44336;
+}

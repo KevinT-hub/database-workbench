@@ -1,0 +1,84 @@
+/* 亮色主题变量（由 global.css @import 引入，主题切换类挂在 html 上） */
+:root {
+  --app-bg: #ffffff;
+  --app-text: #1c2127;
+  --page-bg: #ffffff;
+  --sidebar-bg: #1a1a2e;
+  --sidebar-hover: #16213e;
+  --sidebar-active: #0f3460;
+  --toolbar-bg: #2f343c;
+  --statusbar-bg: #f5f5f5;
+  --editor-bg: #1e1e1e;
+  --update-dot: #f5c842;
+
+  --options-sidebar-bg: #f8f9fa;
+  --options-sidebar-border: #e0e0e0;
+  --options-nav-active-bg: #e3f2fd;
+  --options-nav-active-text: #1976d2;
+  --options-group-divider: #e0e0e0;
+  --options-item-bg: #ffffff;
+  --options-item-hover: #f5f5f5;
+  --options-input-bg: #ffffff;
+  --options-input-border: #d0d0d0;
+  --options-input-text: #333333;
+  --options-card-bg: #ffffff;
+  --options-card-border: #e0e0e0;
+  --options-callout-bg: #f5f5f5;
+  --options-callout-border: #e0e0e0;
+  --options-switch-bg: #ccc;
+  --options-switch-active: #007acc;
+
+  --properties-sidebar-bg: #f8f9fa;
+  --properties-sidebar-border: #e0e0e0;
+  --properties-nav-active-bg: #e3f2fd;
+  --properties-nav-active-text: #1976d2;
+  --properties-nav-hover-bg: #f0f0f0;
+  --properties-nav-text: #1c2127;
+  --properties-nav-text-muted: #5f6b7a;
+  --properties-content-border: #e0e0e0;
+  --properties-group-bg: #ffffff;
+  --properties-group-border: #e0e0e0;
+  --properties-item-border: #f0f0f0;
+  --properties-item-hover: #f5f5f5;
+  --properties-callout-bg: #f5f5f5;
+  --properties-callout-border: #e0e0e0;
+}
+
+html.bp5-light,
+html.bp5-light body,
+html.bp6-light,
+html.bp6-light body {
+  background-color: #ffffff;
+  color: #1c2127;
+  --page-bg: #ffffff;
+}
+
+.bp6-light {
+  --bp6-app-background-color: #f3f3f3;
+  --bp6-menu-background-color: #ffffff;
+  --bp6-menu-background-color-hover: #e8e8e8;
+  --bp6-menu-background-color-active: #007acc;
+  --bp6-divider-black: #e0e0e0;
+  --bp6-text-color: #333333;
+  --bp6-text-color-muted: #666666;
+  --bp6-icon-color: #424242;
+  --bp6-intent-primary: #007acc;
+  --bp6-intent-success: #4caf50;
+  --bp6-intent-warning: #ff9800;
+  --bp6-intent-danger: #f44336;
+}
+
+.bp5-light {
+  --bp5-app-background-color: #f3f3f3;
+  --bp5-menu-background-color: #ffffff;
+  --bp5-menu-background-color-hover: #e8e8e8;
+  --bp5-menu-background-color-active: #007acc;
+  --bp5-divider-black: #e0e0e0;
+  --bp5-text-color: #333333;
+  --bp5-text-color-muted: #666666;
+  --bp5-icon-color: #424242;
+  --bp5-intent-primary: #007acc;
+  --bp5-intent-success: #4caf50;
+  --bp5-intent-warning: #ff9800;
+  --bp5-intent-danger: #f44336;
+}
