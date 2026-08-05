@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
+    "update:latest": "node scripts/update-latest.mjs --from-release",
     "lint": "eslint src --max-warnings 0",
     "lint:fix": "eslint src --fix",
     "knip": "knip --production",

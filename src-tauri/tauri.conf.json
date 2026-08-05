@@ -48,8 +48,8 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI2OTRDMEQ0NDA0MUI1QUQKUldTdHRVRkExTUNVdHRQNHFmUTlyaEF6a2dObWFEVUg4SHlrbk9UUmx2TDJYT3ZiVFhkU251T3QK",
       "endpoints": [
-        "https://raw.githubusercontent.com/T-152-kw/database-workbench/main/latest.json",
-        "https://gitee.com/nick4487617348/database-workbench/raw/master/latest.json"
+        "https://github.com/KevinT-hub/database-workbench/releases/download/update/latest.json",
+        "https://gitee.com/kevint-hub/database-workbench/releases/download/update/latest.json"
       ]
     }
   }

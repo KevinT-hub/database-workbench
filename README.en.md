@@ -27,18 +27,18 @@ A modern, lightweight database management desktop client built with **Tauri v2 +
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Getting Started](#getting-started)
-- [Configuration](#configuration)
-- [Development](#development)
-- [Database Support & Roadmap](#database-support--roadmap)
-- [Contributing](#contributing)
-- [License](#license)
-- [Links](#links)
+  - [Features](#features)
+  - [Tech Stack](#tech-stack)
+  - [Architecture](#architecture)
+  - [Project Structure](#project-structure)
+  - [Requirements](#requirements)
+  - [Getting Started](#getting-started)
+  - [Configuration](#configuration)
+  - [Development](#development)
+  - [Database Support \& Roadmap](#database-support--roadmap)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Links](#links)
 
 ---
 
@@ -299,7 +299,7 @@ The multi-engine design is already in place (a shared `DatabaseAdapter` trait pl
 
 ## Contributing
 
-Contributions are welcome! Please open an [Issue](https://github.com/T-152-kw/database-workbench/issues) or a Pull Request.
+Contributions are welcome! Please open an [Issue](https://github.com/KevinT-hub/database-workbench/issues) or a Pull Request.
 
 - For bugs and feature requests, open an issue with reproduction steps / context.
 - Keep PRs focused; run `npm run typecheck` and `npm run lint` before submitting.
@@ -315,5 +315,5 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ## Links
 
-- GitHub: [T-152-kw/database-workbench](https://github.com/T-152-kw/database-workbench)
-- Gitee: [nick4487617348/database-workbench](https://gitee.com/nick4487617348/database-workbench)
+- GitHub：[KevinT-hub/database-workbench](https://github.com/KevinT-hub/database-workbench)
+- Gitee：[KevinT-hub/database-workbench](https://gitee.com/kevint-hub/database-workbench)

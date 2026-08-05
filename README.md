@@ -299,7 +299,7 @@ MySQL 连接支持以下参数：
 
 ## 贡献
 
-欢迎贡献！请提交 [Issue](https://github.com/T-152-kw/database-workbench/issues) 或 Pull Request。
+欢迎贡献！请提交 [Issue](https://github.com/KevinT-hub/database-workbench/issues) 或 Pull Request。
 
 - 反馈缺陷与功能需求时，请附上复现步骤 / 上下文。
 - 保持 PR 聚焦；提交前请运行 `npm run typecheck` 与 `npm run lint`。
@@ -315,5 +315,5 @@ MySQL 连接支持以下参数：
 
 ## 相关链接
 
-- GitHub：[T-152-kw/database-workbench](https://github.com/T-152-kw/database-workbench)
-- Gitee：[nick4487617348/database-workbench](https://gitee.com/nick4487617348/database-workbench)
+- GitHub：[KevinT-hub/database-workbench](https://github.com/KevinT-hub/database-workbench)
+- Gitee：[KevinT-hub/database-workbench](https://gitee.com/kevint-hub/database-workbench)

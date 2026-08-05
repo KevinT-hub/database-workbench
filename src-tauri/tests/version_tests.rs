@@ -22,9 +22,9 @@ fn test_update_checker_version_compare() {
         published_at: "2025-01-01".into(),
         preferred_source: "github".into(),
         country_code: "US".into(),
-        has_update: true,
+        available: true,
     };
-    assert!(info.has_update);
+    assert!(info.available);
 }
 
 #[test]
@@ -48,12 +48,14 @@ fn test_region_update_info_serialization() {
         published_at: "2025-01-15T10:00:00Z".into(),
         preferred_source: "gitee".into(),
         country_code: "CN".into(),
-        has_update: true,
+        available: true,
     };
     let json = serde_json::to_string(&info).unwrap();
+    assert!(json.contains("available"));
     assert!(json.contains("preferredSource"));
     assert!(json.contains("countryCode"));
-    assert!(json.contains("hasUpdate"));
+    assert!(json.contains("body"));
+    assert!(json.contains("date"));
     assert!(json.contains("downloadUrl"));
 }
 
@@ -78,7 +80,7 @@ fn test_update_checker_no_update() {
         published_at: String::new(),
         preferred_source: "github".into(),
         country_code: "US".into(),
-        has_update: false,
+        available: false,
     };
-    assert!(!info.has_update);
+    assert!(!info.available);
 }

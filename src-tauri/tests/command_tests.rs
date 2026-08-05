@@ -24,11 +24,15 @@ fn test_pool_stats_type() {
         idle_connections: 2,
         max_size: 10,
         waiting_threads: 0,
+        total_pool_creates: 1,
+        total_pool_reuses: 0,
+        total_conn_acquires: 3,
+        total_conn_releases: 2,
     };
     assert_eq!(stats.pool_id, 1);
     assert_eq!(stats.total_connections, 5);
     let json = serde_json::to_string(&stats).unwrap();
-    assert!(json.contains("pool_id"));
+    assert!(json.contains("poolId"));
 }
 
 #[test]
@@ -46,8 +50,8 @@ fn test_connection_properties_type() {
         procedure_count: Some(10),
     };
     let json = serde_json::to_string(&props).unwrap();
-    assert!(json.contains("connection_status"));
-    assert!(json.contains("server_version"));
+    assert!(json.contains("connectionStatus"));
+    assert!(json.contains("serverVersion"));
 }
 
 #[test]
@@ -234,12 +238,12 @@ fn test_column_info_type() {
 fn test_index_info_type() {
     let idx = IndexInfo {
         name: "PRIMARY".into(),
-        non_unique: false,
+        non_unique: "0".into(),
         columns: "id".into(),
         index_type: "BTREE".into(),
     };
     assert_eq!(idx.name, "PRIMARY");
-    assert!(!idx.non_unique);
+    assert_eq!(idx.non_unique, "0");
 }
 
 #[test]

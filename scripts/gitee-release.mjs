@@ -1,0 +1,140 @@
+#!/usr/bin/env node
+/**
+ * Mirrors release artifacts to a Gitee release through the Gitee OpenAPI.
+ *
+ * It only touches releases (never pushes code), so the README / LICENSE on the
+ * Gitee repository remain managed by the maintainer.
+ *
+ * Usage:
+ *   node scripts/gitee-release.mjs --tag <tag> --dir <dir> [--title <title>] [--notes <notes>]
+ *
+ * Required env:
+ *   GITEE_ACCESS_TOKEN (personal token with `projects` scope)
+ * Optional env:
+ *   GITEE_OWNER, GITEE_REPO
+ *
+ * The release is deleted and recreated when it already exists so uploads are
+ * idempotent (Gitee does not allow replacing attachments in place).
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+
+const args = process.argv.slice(2);
+const argValue = (name) => {
+  const index = args.indexOf(name);
+  return index >= 0 ? args[index + 1] : undefined;
+};
+
+const GITEE_API = 'https://gitee.com/api/v5';
+const TOKEN = process.env.GITEE_ACCESS_TOKEN;
+const OWNER = process.env.GITEE_OWNER || 'kevint-hub';
+const REPO = process.env.GITEE_REPO || 'database-workbench';
+
+if (!TOKEN) {
+  console.error('GITEE_ACCESS_TOKEN is required');
+  process.exit(1);
+}
+
+async function request(pathname, options = {}) {
+  const url = `${GITEE_API}${pathname}`;
+  const response = await fetch(url, options);
+  const text = await response.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = text;
+  }
+  if (!response.ok) {
+    throw new Error(`Gitee API ${response.status} ${pathname}: ${String(text).slice(0, 300)}`);
+  }
+  return data;
+}
+
+async function deleteRelease(releaseId) {
+  await request(
+    `/repos/${OWNER}/${REPO}/releases/${releaseId}?access_token=${encodeURIComponent(TOKEN)}`,
+    { method: 'DELETE' },
+  );
+  console.log(`Deleted existing release ${releaseId}`);
+}
+
+async function findRelease(tag) {
+  const releases =
+    (await request(
+      `/repos/${OWNER}/${REPO}/releases?access_token=${encodeURIComponent(TOKEN)}&per_page=100&page=1`,
+    )) || [];
+  return releases.find((release) => release.tag_name === tag);
+}
+
+async function createRelease(tag, title, notes) {
+  const form = new URLSearchParams();
+  form.set('access_token', TOKEN);
+  form.set('tag_name', tag);
+  form.set('name', title || tag);
+  form.set('body', notes || '');
+  form.set('prerelease', 'false');
+
+  const release = await request(`/repos/${OWNER}/${REPO}/releases`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: form,
+  });
+  console.log(`Created Gitee release ${tag} (id=${release.id})`);
+  return release;
+}
+
+async function uploadAttachment(releaseId, filePath) {
+  const fileName = path.basename(filePath);
+  const form = new FormData();
+  form.set('access_token', TOKEN);
+  form.set('name', fileName);
+  form.set('file', new File([fs.readFileSync(filePath)], fileName));
+
+  const response = await fetch(
+    `${GITEE_API}/repos/${OWNER}/${REPO}/releases/${releaseId}/attach_files`,
+    { method: 'POST', body: form },
+  );
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(`Upload ${fileName} failed: HTTP ${response.status} ${text.slice(0, 300)}`);
+  }
+  console.log(`[ok] uploaded ${fileName}`);
+  return JSON.parse(text);
+}
+
+async function main() {
+  const tag = argValue('--tag');
+  const dir = argValue('--dir');
+  const title = argValue('--title');
+  const notes = argValue('--notes');
+
+  if (!tag || !dir) {
+    throw new Error('--tag and --dir are required');
+  }
+  if (!fs.existsSync(dir)) {
+    throw new Error(`Directory not found: ${dir}`);
+  }
+
+  const existing = await findRelease(tag);
+  if (existing) {
+    await deleteRelease(existing.id);
+  }
+  const release = await createRelease(tag, title, notes);
+
+  const files = fs.readdirSync(dir).sort();
+  if (files.length === 0) {
+    throw new Error(`No files to upload in ${dir}`);
+  }
+  for (const file of files) {
+    await uploadAttachment(release.id, path.join(dir, file));
+  }
+
+  console.log(`Gitee release ready: https://gitee.com/${OWNER}/${REPO}/releases/tag/${tag}`);
+}
+
+main().catch((error) => {
+  console.error(error.message || error);
+  process.exit(1);
+});

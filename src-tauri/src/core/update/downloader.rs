@@ -1,8 +1,9 @@
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use serde::Serialize;
-use tauri::{AppHandle, Emitter};
+use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_updater::UpdaterExt;
 use crate::errors::{AppError, AppResult};
+use super::{endpoints, geo};
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -16,7 +17,27 @@ pub struct UpdaterDownloadProgressEvent {
 }
 
 pub async fn download_and_install(app: AppHandle) -> AppResult<()> {
-    let updater = app.updater().map_err(|e| AppError::Updater(e.to_string()))?;
+    // Pick the endpoint order based on the region detected at startup:
+    // CN -> Gitee first (GitHub fallback), otherwise GitHub first (Gitee fallback).
+    let country_code = app
+        .try_state::<geo::CountryCodeCache>()
+        .and_then(|cache| cache.get())
+        .unwrap_or_else(|| "US".to_string());
+
+    let endpoint_urls = endpoints::endpoints_for_country(&country_code);
+    let urls = endpoint_urls
+        .iter()
+        .filter_map(|url| tauri::Url::parse(url).ok())
+        .collect::<Vec<_>>();
+
+    let mut builder = app.updater_builder();
+    builder = builder
+        .endpoints(urls)
+        .map_err(|e| AppError::Updater(e.to_string()))?;
+    let updater = builder
+        .build()
+        .map_err(|e| AppError::Updater(e.to_string()))?;
+
     let update = updater
         .check()
         .await

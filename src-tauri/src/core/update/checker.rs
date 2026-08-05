@@ -1,11 +1,8 @@
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-// 与 tauri.conf.json plugins.updater.endpoints 保持一致
-const GITHUB_LATEST_JSON: &str =
-    "https://raw.githubusercontent.com/T-152-kw/database-workbench/main/latest.json";
-const GITEE_LATEST_JSON: &str =
-    "https://gitee.com/nick4487617348/database-workbench/raw/master/latest.json";
+use super::endpoints;
+
 const WINDOWS_TARGET: &str = "windows-x86_64";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -14,8 +11,9 @@ pub struct RegionUpdateInfo {
     pub version: String,
     #[serde(rename = "downloadUrl")]
     pub download_url: String,
+    #[serde(rename = "body")]
     pub notes: String,
-    #[serde(rename = "publishedAt")]
+    #[serde(rename = "date")]
     pub published_at: String,
     #[serde(rename = "preferredSource")]
     pub preferred_source: String,
@@ -47,17 +45,17 @@ pub async fn check_update(country_code: &str) -> Result<RegionUpdateInfo, String
     let is_china = country_code == "CN";
 
     if is_china {
-        let result = check_source(GITEE_LATEST_JSON, "gitee").await;
+        let result = check_source(&endpoints::gitee_latest_json_url(), "gitee").await;
         if result.is_ok() {
             return result;
         }
-        check_source(GITHUB_LATEST_JSON, "github-fallback").await
+        check_source(&endpoints::github_latest_json_url(), "github-fallback").await
     } else {
-        let result = check_source(GITHUB_LATEST_JSON, "github").await;
+        let result = check_source(&endpoints::github_latest_json_url(), "github").await;
         if result.is_ok() {
             return result;
         }
-        check_source(GITEE_LATEST_JSON, "gitee-fallback").await
+        check_source(&endpoints::gitee_latest_json_url(), "gitee-fallback").await
     }
 }
 
