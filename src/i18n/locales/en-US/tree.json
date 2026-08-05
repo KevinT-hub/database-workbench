@@ -1,0 +1,279 @@
+{
+  "metadataTree": {
+    "columns": "Columns",
+    "indexes": "Indexes",
+    "foreignKeys": "Foreign Keys",
+    "checks": "Checks",
+    "triggers": "Triggers",
+    "tables": "Tables",
+    "views": "Views",
+    "functions": "Functions",
+    "noTables": "No Tables",
+    "noViews": "No Views",
+    "noFunctions": "No Functions",
+    "noColumns": "No Columns",
+    "noIndexes": "No Indexes",
+    "noForeignKeys": "No Foreign Keys",
+    "noChecks": "No Check Constraints",
+    "noTriggers": "No Triggers",
+    "noParams": "No Parameters",
+    "loadingDatabases": "Loading databases...",
+    "databasesLoaded": "Loaded {{count}} database(s)",
+    "connectionFailed": "Connection failed",
+    "connectionFailedWithError": "Connection failed: {{error}}",
+    "connectionClosed": "Connection closed",
+    "openDatabaseFailed": "Failed to open database",
+    "databaseClosed": "Database closed",
+    "loadFailed": "Load failed",
+    "creatingDatabase": "Creating database...",
+    "databaseCreated": "Database '{{name}}' created",
+    "createDatabaseFailed": "Failed to create database",
+    "createFailed": "Create failed: {{error}}",
+    "systemDbProtected": "System database is protected and cannot be deleted!",
+    "confirmDeleteDatabase": "Confirm Delete Database",
+    "deleteDatabaseWarning": "Are you sure you want to delete database '{{name}}'?\nAll data will be permanently lost!",
+    "deletingDatabase": "Deleting database...",
+    "databaseDeleted": "Database '{{name}}' deleted",
+    "deleteDatabaseFailed": "Failed to delete database",
+    "deleteFailed": "Delete failed: {{error}}",
+    "confirmDeleteConnection": "Confirm Delete Connection",
+    "deleteConnectionWarning": "Are you sure you want to delete connection '{{name}}'?\nThis action cannot be undone.",
+    "connectionDeleted": "Connection '{{name}}' deleted",
+    "noMetadataToRefresh": "No connected metadata to refresh",
+    "refreshingMetadata": "Refreshing metadata...",
+    "metadataRefreshed": "Metadata refresh completed",
+    "openConnection": "Open Connection",
+    "closeConnection": "Close Connection",
+    "newDatabase": "New Database",
+    "editConnection": "Edit Connection",
+    "deleteConnection": "Delete Connection",
+    "systemDbWarning": "⚠️ System Database - Proceed with Caution",
+    "openDatabase": "Open Database",
+    "closeDatabase": "Close Database",
+    "deleteDatabase": "Delete Database",
+    "deleteSystemDb": "Delete Database (System DB Protected)",
+    "noConnections": "No Connections",
+    "addConnectionHint": "Click \"New Connection\" in the toolbar to add",
+    "openSystemDbTitle": "Open System Database",
+    "openSystemDbWarning": "⚠️ Warning: You are about to open a system database!\n\nSystem databases contain critical data required for MySQL server operation. Improper operations may cause the server to malfunction.\n\nPlease ensure you understand what you are doing and proceed with caution!",
+    "maxConnectionsReached": "Maximum connections reached ({{current}}/{{max}})",
+    "newObject": "New",
+    "openTable": "Open Table",
+    "newTable": "New Table",
+    "designTable": "Design Table",
+    "deleteTable": "Delete Table",
+    "openView": "Open View",
+    "newView": "New View",
+    "editView": "Edit View",
+    "deleteView": "Delete View",
+    "viewDefinition": "View Definition",
+    "openFunction": "Open Function",
+    "newFunction": "New Function",
+    "editFunction": "Edit Function",
+    "executeFunction": "Execute Function",
+    "deleteFunction": "Delete Function",
+    "confirmDeleteObjectTitle": "Confirm Delete Object",
+    "confirmDeleteObjectMessage": "Are you sure you want to delete {{objectType}} '{{name}}'?\nThis action cannot be undone.",
+    "objectTypeTable": "Table",
+    "objectTypeView": "View",
+    "objectTypeFunction": "Function",
+    "objectTypeProcedure": "Procedure",
+    "objectTypeColumn": "Column",
+    "objectTypeIndex": "Index",
+    "objectTypeForeignKey": "Foreign Key",
+    "objectTypeCheck": "Check Constraint",
+    "objectTypeTrigger": "Trigger",
+    "editObject": "Edit {{objectType}}",
+    "newObjectWithType": "New {{objectType}}",
+    "deleteObjectWithType": "Delete {{objectType}}",
+    "renameObject": "Rename",
+    "renamePrompt": "Enter a new name for {{objectType}} \"{{name}}\"",
+    "objectDeleted": "{{objectType}} '{{name}}' deleted",
+    "objectDeleteFailed": "Failed to delete object",
+    "objectDeleteFailedWithError": "Failed to delete object: {{error}}"
+  },
+  "tableDataTab": {
+    "buttons": {
+      "refresh": "Refresh",
+      "addRow": "Add Row",
+      "deleteRow": "Delete Row",
+      "preview": "Preview",
+      "withdraw": "Withdraw",
+      "submit": "Submit",
+      "reset": "Reset",
+      "confirm": "Confirm",
+      "export": "Export",
+      "import": "Import",
+      "exportCsv": "Export CSV"
+    },
+    "tooltips": {
+      "refresh": "Refresh Data",
+      "addRow": "Add New Row",
+      "deleteRow": "Delete Selected Row",
+      "preview": "Preview Commit",
+      "withdraw": "Withdraw All Changes",
+      "submit": "Submit Changes",
+      "export": "Export Data",
+      "import": "Import Data",
+      "exportCsv": "Export CSV"
+    },
+    "export": {
+      "title": "Export {{format}} File",
+      "cancelled": "Export cancelled",
+      "success": "Export successful: {{count}} rows saved to {{path}}",
+      "failed": "Export failed: {{error}}",
+      "dialogTitle": "Select Export Range",
+      "dialogMessage": "Total {{totalRows}} rows, please select export range",
+      "exportAll": "Export All",
+      "exportCurrent": "Export Current Page"
+    },
+    "import": {
+      "title": "Import {{format}} File",
+      "cancelled": "Import cancelled",
+      "success": "Import successful: {{count}} rows imported",
+      "failed": "Import failed: {{error}}"
+    },
+    "format": {
+      "csv": "CSV",
+      "txt": "TXT",
+      "json": "JSON",
+      "html": "HTML",
+      "xml": "XML",
+      "sql": "SQL",
+      "xlsx": "XLSX"
+    },
+    "changesPending": "{{count}} change(s) pending",
+    "rowsSelected": "{{count}} row(s) selected",
+    "loading": "Loading...",
+    "pagination": {
+      "showingRows": "Showing {{start}}-{{end}} of {{total}} rows",
+      "pageSize": "Page size:",
+      "pageInfo": "Page {{page}} / {{totalPages}}"
+    },
+    "errors": {
+      "connectionFailed": "Connection failed: {{error}}",
+      "loadDataFailed": "Failed to load data: {{error}}",
+      "submitFailed": "Failed to submit changes: {{error}}"
+    },
+    "contextMenu": {
+      "copy": "Copy",
+      "copyRow": "Copy Row",
+      "edit": "Edit",
+      "cancel": "Cancel"
+    }
+  },
+  "userTab": {
+    "username": "User",
+    "host": "Host",
+    "plugin": "Auth Plugin",
+    "status": "Status",
+    "searchPlaceholder": "Search users...",
+    "totalCount": "{{count}} user(s)",
+    "loading": "Loading users...",
+    "empty": "No users",
+    "loadFailed": "Failed to load users: {{error}}",
+    "newUser": "New User",
+    "deleteConfirm": "Delete user <strong>{{username}}@{{host}}</strong>?",
+    "deleteWarning": "This action cannot be undone.",
+    "deleteFailed": "Failed to delete user: {{error}}"
+  },
+  "userEditor": {
+    "newUser": "Create New User",
+    "editUser": "Edit User: {{username}}@{{host}}",
+    "tabs": {
+      "general": "General",
+      "serverPrivileges": "Server Privileges",
+      "databasePrivileges": "Database Privileges",
+      "sqlPreview": "SQL Preview"
+    },
+    "form": {
+      "username": "Username",
+      "host": "Host",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "authPlugin": "Authentication Plugin",
+      "required": "(required)",
+      "placeholders": {
+        "username": "Enter username",
+        "host": "e.g., % or localhost",
+        "passwordNew": "Enter password",
+        "passwordEdit": "Leave blank to keep unchanged",
+        "confirmPassword": "Re-enter password"
+      }
+    },
+    "databasePrivileges": {
+      "add": "Add",
+      "name": "Name",
+      "operation": "Operation",
+      "hint": "Please select database, table, and column, then click \"Add\" to configure privileges by scope below."
+    },
+    "buttons": {
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "loading": "Loading user data...",
+    "systemUserConfirm": {
+      "title": "Modify System User",
+      "message": "⚠️ Warning: You are about to modify the system user {{username}}@{{host}}!\n\nSystem users are closely related to MySQL server operation and internal mechanisms. Improper modifications may cause authentication issues, privilege problems, or service unavailability.\n\nPlease confirm you understand the risks and proceed to save.",
+      "confirm": "Confirm Modify",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "loadFailed": "Failed to load user data: {{error}}",
+      "usernameRequired": "Username is required",
+      "hostRequired": "Host is required",
+      "passwordRequired": "Password is required",
+      "passwordMismatch": "Passwords do not match",
+      "saveFailed": "Failed to save: {{error}}",
+      "generateSqlFailed": "-- Failed to generate SQL: {{error}}"
+    },
+    "success": {
+      "userCreated": "User created successfully",
+      "userUpdated": "User updated successfully"
+    }
+  },
+  "previewCommit": {
+    "dialog": {
+      "title": "Preview Commit - {{database}}.{{tableName}}",
+      "viewTitle": "Preview Commit - {{database}}.{{viewName}} (Base Table: {{baseTableName}})",
+      "tabs": {
+        "changes": "Change Details",
+        "associations": "Preview Associations"
+      },
+      "changes": {
+        "noData": "No changes to commit",
+        "recordCount": "{{count}} change record(s)",
+        "operation": "Operation",
+        "operations": {
+          "new": "Insert",
+          "modified": "Update",
+          "deleted": "Delete"
+        },
+        "pkIndicator": "PK"
+      },
+      "associations": {
+        "loading": "Loading associations...",
+        "noAssociations": "No associated constraints or triggers found",
+        "viewNoAssociations": "No associated constraints or triggers found on base table",
+        "baseTable": "Base Table",
+        "baseTableInfo": "Association information from base table. Your changes will directly affect base table data",
+        "trigger": "Trigger",
+        "foreignKeyConstraint": "[FK Constraint] This table field '{{myColumn}}' → Parent table '{{refTable}}.{{refColumn}}'",
+        "viewForeignKeyConstraint": "[FK Constraint] Base table field '{{myColumn}}' → Parent table '{{refTable}}.{{refColumn}}'",
+        "dependencyCheck": "[Dependency Check] Child table '{{refTable}}' (FK '{{refColumn}}' → This table '{{myColumn}}') contains related data:",
+        "viewDependencyCheck": "[Dependency Check] Child table '{{refTable}}' (FK '{{refColumn}}' → Base table '{{myColumn}}') contains related data:",
+        "moreRows": "{{count}} more rows...",
+        "missingValuesWarning": "Referenced values do not exist in parent table ({{parentTable}}), commit will fail",
+        "dependencyWarning": "Dependent data exists, committing changes may cause foreign key conflicts or trigger cascade operations"
+      },
+      "viewInfo": {
+        "title": "View Operation Notice:",
+        "description": "You are modifying base table {{baseTableName}} data through view {{viewName}}. The following changes will directly affect the base table."
+      },
+      "errors": {
+        "loadAssociationsFailed": "Failed to load association information: {{error}}"
+      },
+      "close": "Close"
+    }
+  }
+}

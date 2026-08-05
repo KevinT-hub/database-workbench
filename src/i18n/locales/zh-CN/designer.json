@@ -1,0 +1,313 @@
+{
+  "designerTab": {
+    "tabTitle": "表设计 - {{name}}",
+    "loading": "正在加载表结构...",
+    "saveSuccess": {
+      "create": "表 {{name}} 创建成功",
+      "modify": "表 {{name}} 修改成功"
+    },
+    "errors": {
+      "loadFailed": "加载表结构失败: {{error}}",
+      "noTableName": "请先输入表名",
+      "saveFailed": "保存失败: {{error}}"
+    },
+    "fields": {
+      "addField": "添加字段",
+      "insertField": "插入字段",
+      "deleteField": "删除字段",
+      "primaryKey": "主键",
+      "moveUp": "上移",
+      "moveDown": "下移",
+      "zeroFillTitle": "整数显示宽度设置",
+      "zeroFill": "是否填充0",
+      "zeroFillHint": "是否填充0",
+      "enumValuesTitle": "枚举/集合值定义",
+      "enumValues": "值列表",
+      "charsetCollation": "字符集和排序规则",
+      "default": "默认",
+      "columns": {
+        "name": "名称",
+        "type": "类型",
+        "length": "长度",
+        "decimals": "小数点",
+        "notNull": "不是 null",
+        "key": "键",
+        "autoIncrement": "自增",
+        "default": "默认值",
+        "comment": "注释",
+        "charset": "字符集",
+        "collation": "排序规则"
+      },
+      "placeholders": {
+        "name": "字段名",
+        "length": "长度",
+        "decimals": "小数点",
+        "enumValues": "例如: 'A','B','C'",
+        "default": "默认值",
+        "comment": "注释"
+      }
+    },
+    "indexes": {
+      "addIndex": "添加索引",
+      "deleteIndex": "删除索引",
+      "noIndexes": "暂无索引",
+      "columns": {
+        "name": "名称",
+        "fields": "字段",
+        "type": "索引类型",
+        "method": "索引方法",
+        "comment": "注释"
+      },
+      "placeholders": {
+        "name": "索引名",
+        "fields": "字段名，逗号分隔",
+        "comment": "注释"
+      }
+    },
+    "foreignKeys": {
+      "addForeignKey": "添加外键",
+      "deleteForeignKey": "删除外键",
+      "noForeignKeys": "暂无外键",
+      "columns": {
+        "name": "名称",
+        "fields": "字段",
+        "refSchema": "被引用的模式",
+        "refTable": "被引用的表",
+        "refFields": "被引用的字段",
+        "onDelete": "删除时",
+        "onUpdate": "更新时"
+      },
+      "placeholders": {
+        "name": "外键名",
+        "fields": "字段名，逗号分隔",
+        "refSchema": "被引用的模式",
+        "refTable": "被引用的表",
+        "refFields": "被引用的字段"
+      }
+    },
+    "checks": {
+      "addCheck": "添加检查",
+      "deleteCheck": "删除检查",
+      "noChecks": "暂无检查约束",
+      "columns": {
+        "name": "名称",
+        "clause": "检查",
+        "notEnforced": "不强制实施"
+      },
+      "placeholders": {
+        "name": "检查名",
+        "clause": "检查条件"
+      }
+    },
+    "triggers": {
+      "addTrigger": "添加触发器",
+      "deleteTrigger": "删除触发器",
+      "noTriggers": "暂无触发器",
+      "columns": {
+        "name": "名称",
+        "timing": "触发",
+        "insert": "插入",
+        "update": "更新",
+        "delete": "删除"
+      },
+      "placeholders": {
+        "name": "触发器名"
+      },
+      "definition": "定义",
+      "edit": "修改",
+      "done": "完成"
+    },
+    "options": {
+      "engine": "存储引擎",
+      "charset": "字符集",
+      "collation": "排序规则",
+      "comment": "表注释",
+      "autoIncrement": "自增值",
+      "placeholders": {
+        "comment": "表注释",
+        "autoIncrement": "自增值"
+      }
+    },
+    "tabs": {
+      "fields": "字段",
+      "indexes": "索引",
+      "foreignKeys": "外键",
+      "checks": "检查",
+      "triggers": "触发器",
+      "options": "选项",
+      "sqlPreview": "SQL 预览"
+    },
+    "newTable": "新建表",
+    "designTable": "设计表",
+    "refresh": "刷新",
+    "save": "保存",
+    "tableNamePlaceholder": "请输入表名"
+  },
+  "viewTab": {
+    "designer": {
+      "newView": "创建新视图",
+      "editView": "编辑视图",
+      "database": "数据库",
+      "viewNamePlaceholder": "输入视图名称",
+      "save": "保存",
+      "saveAsNew": "另存为新视图",
+      "format": "格式化",
+      "clear": "清空",
+      "error": "错误",
+      "success": "成功",
+      "definitionLabel": "视图定义 (SELECT 语句)",
+      "loading": "正在加载视图定义...",
+      "errors": {
+        "loadFailed": "无法加载视图 \"{{name}}\" 的定义",
+        "loadDefinitionFailed": "加载视图定义失败: {{error}}",
+        "enterViewName": "请输入视图名称",
+        "enterDefinition": "请输入视图定义 (SELECT 语句)",
+        "saveFailed": "保存视图失败: {{error}}",
+        "createFailed": "创建新视图失败: {{error}}"
+      },
+      "successes": {
+        "saved": "视图 \"{{name}}\" 已保存成功",
+        "created": "新视图 \"{{name}}\" 已创建成功"
+      },
+      "prompts": {
+        "enterNewViewName": "请输入新视图名称"
+      }
+    },
+    "data": {
+      "title": "视图数据",
+      "readOnly": {
+        "title": "只读模式",
+        "description": "此视图为只读模式，不可进行数据编辑操作。该视图不满足MySQL可更新视图的条件（如包含聚合函数、多表连接、UNION等）"
+      },
+      "toolbar": {
+        "refresh": "刷新",
+        "addRow": "添加行",
+        "deleteRow": "删除行",
+        "preview": "预览提交",
+        "withdraw": "撤回",
+        "submit": "提交更改",
+        "changesPending": "项更改待提交",
+        "rowsSelected": "已选择 {{count}} 行"
+      },
+      "buttons": {
+        "reset": "重置",
+        "confirm": "确认",
+        "exportCsv": "导出CSV"
+      },
+      "tooltips": {
+        "refresh": "刷新数据",
+        "addRow": "添加新行",
+        "deleteRow": "删除选中行",
+        "preview": "预览提交",
+        "withdraw": "撤回所有更改",
+        "submit": "提交更改",
+        "exportCsv": "导出"
+      },
+      "export": {
+        "title": "导出{{format}}文件",
+        "cancelled": "导出已取消",
+        "success": "导出成功：{{count}} 行数据已保存到 {{path}}",
+        "failed": "导出失败：{{error}}",
+        "dialogTitle": "选择导出范围",
+        "dialogMessage": "共有 {{totalRows}} 行数据，请选择导出范围",
+        "exportAll": "导出全表",
+        "exportCurrent": "导出当前页"
+      },
+      "pagination": {
+        "showing": "显示 {{start}}-{{end}} 行，共 {{total}} 行",
+        "pageSize": "每页显示"
+      },
+      "loading": "加载中...",
+      "errors": {
+        "connectFailed": "连接失败: {{error}}",
+        "loadDataFailed": "加载数据失败: {{error}}",
+        "cannotDeterminePk": "无法更新：无法确定基表的主键",
+        "pkColumnNotFound": "无法找到主键列 {{name}} 在视图中的映射",
+        "submitFailed": "提交更改失败: {{error}}"
+      }
+    }
+  },
+  "functionTab": {
+    "newFunction": "新建函数",
+    "newProcedure": "新建存储过程",
+    "editFunction": "函数 - {{name}}",
+    "editProcedure": "存储过程 - {{name}}",
+    "toolbar": {
+      "refresh": "刷新",
+      "new": "新建",
+      "execute": "执行",
+      "save": "保存"
+    },
+    "properties": {
+      "name": "名称",
+      "type": "类型",
+      "returnType": "返回类型",
+      "deterministic": "确定性",
+      "comment": "注释",
+      "placeholders": {
+        "functionName": "函数名称",
+        "procedureName": "存储过程名称",
+        "returnType": "如: INT, VARCHAR(255)",
+        "functionComment": "函数注释",
+        "procedureComment": "存储过程注释"
+      }
+    },
+    "types": {
+      "function": "函数",
+      "procedure": "存储过程"
+    },
+    "editor": {
+      "label": "定义代码:"
+    },
+    "status": {
+      "ready": "就绪",
+      "loading": "加载中...",
+      "loadComplete": "加载完成",
+      "loadFailed": "加载失败",
+      "saving": "保存中...",
+      "saveSuccess": "保存成功",
+      "saveFailed": "保存失败"
+    },
+    "loading": "正在加载{{type}}...",
+    "template": {
+      "functionComment": "-- 函数逻辑",
+      "procedureComment": "-- 存储过程逻辑"
+    },
+    "executeDialog": {
+      "title": "执行 {{type}}: {{name}}",
+      "params": "参数:",
+      "result": "执行结果:",
+      "tabs": {
+        "message": "消息",
+        "data": "数据"
+      },
+      "noParams": "无参数，可以直接执行",
+      "loadingParams": "正在加载参数信息...",
+      "placeholder": "输入 {{type}} 值",
+      "noData": "暂无数据",
+      "defaultMessage": "执行消息将显示在这里...",
+      "close": "关闭",
+      "execute": "执行",
+      "resultSetSelector": "选择结果集",
+      "resultSetLabel": "结果集 {{index}} ({{count}} 行)"
+    },
+    "errors": {
+      "loadFailed": "无法加载{{type}}定义",
+      "loadError": "加载{{type}}失败: {{error}}",
+      "enterName": "请输入{{type}}名称",
+      "enterCode": "请输入{{type}}定义代码",
+      "saveError": "保存失败: {{error}}",
+      "executeSaveFirst": "请先保存后再执行",
+      "loadParamsFailed": "加载参数失败: {{error}}"
+    },
+    "success": {
+      "saved": "{{type}}已保存"
+    },
+    "execute": {
+      "success": "执行成功，返回 {{count}} 行数据",
+      "multiResultSuccess": "执行成功，返回 {{setCount}} 个结果集，共 {{totalRows}} 行数据",
+      "outParams": "执行成功，输出参数: {{params}}",
+      "failed": "执行失败: {{error}}"
+    }
+  }
+}

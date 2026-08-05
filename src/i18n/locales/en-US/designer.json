@@ -1,0 +1,313 @@
+{
+  "designerTab": {
+    "tabTitle": "Table Design - {{name}}",
+    "loading": "Loading table structure...",
+    "saveSuccess": {
+      "create": "Table {{name}} created successfully",
+      "modify": "Table {{name}} modified successfully"
+    },
+    "errors": {
+      "loadFailed": "Failed to load table structure: {{error}}",
+      "noTableName": "Please enter table name first",
+      "saveFailed": "Save failed: {{error}}"
+    },
+    "fields": {
+      "addField": "Add Field",
+      "insertField": "Insert Field",
+      "deleteField": "Delete Field",
+      "primaryKey": "Primary Key",
+      "moveUp": "Move Up",
+      "moveDown": "Move Down",
+      "zeroFillTitle": "Integer display width settings",
+      "zeroFill": "Zero fill",
+      "zeroFillHint": "Pad with leading zeros",
+      "enumValuesTitle": "ENUM/SET value definition",
+      "enumValues": "Value list",
+      "charsetCollation": "Character Set & Collation",
+      "default": "Default",
+      "columns": {
+        "name": "Name",
+        "type": "Type",
+        "length": "Length",
+        "decimals": "Decimals",
+        "notNull": "Not Null",
+        "key": "Key",
+        "autoIncrement": "Auto Inc",
+        "default": "Default",
+        "comment": "Comment",
+        "charset": "Charset",
+        "collation": "Collation"
+      },
+      "placeholders": {
+        "name": "Field name",
+        "length": "Length",
+        "decimals": "Decimals",
+        "enumValues": "Example: 'A','B','C'",
+        "default": "Default",
+        "comment": "Comment"
+      }
+    },
+    "indexes": {
+      "addIndex": "Add Index",
+      "deleteIndex": "Delete Index",
+      "noIndexes": "No indexes",
+      "columns": {
+        "name": "Name",
+        "fields": "Fields",
+        "type": "Index Type",
+        "method": "Method",
+        "comment": "Comment"
+      },
+      "placeholders": {
+        "name": "Index name",
+        "fields": "Field names, comma separated",
+        "comment": "Comment"
+      }
+    },
+    "foreignKeys": {
+      "addForeignKey": "Add Foreign Key",
+      "deleteForeignKey": "Delete Foreign Key",
+      "noForeignKeys": "No foreign keys",
+      "columns": {
+        "name": "Name",
+        "fields": "Fields",
+        "refSchema": "Referenced Schema",
+        "refTable": "Referenced Table",
+        "refFields": "Referenced Fields",
+        "onDelete": "On Delete",
+        "onUpdate": "On Update"
+      },
+      "placeholders": {
+        "name": "Foreign key name",
+        "fields": "Field names, comma separated",
+        "refSchema": "Referenced schema",
+        "refTable": "Referenced table",
+        "refFields": "Referenced fields"
+      }
+    },
+    "checks": {
+      "addCheck": "Add Check",
+      "deleteCheck": "Delete Check",
+      "noChecks": "No check constraints",
+      "columns": {
+        "name": "Name",
+        "clause": "Check Clause",
+        "notEnforced": "Not Enforced"
+      },
+      "placeholders": {
+        "name": "Check name",
+        "clause": "Check condition"
+      }
+    },
+    "triggers": {
+      "addTrigger": "Add Trigger",
+      "deleteTrigger": "Delete Trigger",
+      "noTriggers": "No triggers",
+      "columns": {
+        "name": "Name",
+        "timing": "Timing",
+        "insert": "Insert",
+        "update": "Update",
+        "delete": "Delete"
+      },
+      "placeholders": {
+        "name": "Trigger name"
+      },
+      "definition": "Definition",
+      "edit": "Edit",
+      "done": "Done"
+    },
+    "options": {
+      "engine": "Storage Engine",
+      "charset": "Charset",
+      "collation": "Collation",
+      "comment": "Table Comment",
+      "autoIncrement": "Auto Increment",
+      "placeholders": {
+        "comment": "Table comment",
+        "autoIncrement": "Auto increment value"
+      }
+    },
+    "tabs": {
+      "fields": "Fields",
+      "indexes": "Indexes",
+      "foreignKeys": "Foreign Keys",
+      "checks": "Checks",
+      "triggers": "Triggers",
+      "options": "Options",
+      "sqlPreview": "SQL Preview"
+    },
+    "newTable": "New Table",
+    "designTable": "Design Table",
+    "refresh": "Refresh",
+    "save": "Save",
+    "tableNamePlaceholder": "Enter table name"
+  },
+  "viewTab": {
+    "designer": {
+      "newView": "Create New View",
+      "editView": "Edit View",
+      "database": "Database",
+      "viewNamePlaceholder": "Enter view name",
+      "save": "Save",
+      "saveAsNew": "Save As New View",
+      "format": "Format",
+      "clear": "Clear",
+      "error": "Error",
+      "success": "Success",
+      "definitionLabel": "View Definition (SELECT Statement)",
+      "loading": "Loading view definition...",
+      "errors": {
+        "loadFailed": "Failed to load definition for view \"{{name}}\"",
+        "loadDefinitionFailed": "Failed to load view definition: {{error}}",
+        "enterViewName": "Please enter view name",
+        "enterDefinition": "Please enter view definition (SELECT statement)",
+        "saveFailed": "Failed to save view: {{error}}",
+        "createFailed": "Failed to create new view: {{error}}"
+      },
+      "successes": {
+        "saved": "View \"{{name}}\" saved successfully",
+        "created": "New view \"{{name}}\" created successfully"
+      },
+      "prompts": {
+        "enterNewViewName": "Please enter new view name"
+      }
+    },
+    "data": {
+      "title": "View Data",
+      "readOnly": {
+        "title": "Read Only Mode",
+        "description": "This view is read-only and cannot be edited. The view does not meet MySQL updatable view conditions (e.g., contains aggregate functions, multiple table joins, UNION, etc.)"
+      },
+      "toolbar": {
+        "refresh": "Refresh",
+        "addRow": "Add Row",
+        "deleteRow": "Delete Row",
+        "preview": "Preview",
+        "withdraw": "Withdraw",
+        "submit": "Submit",
+        "changesPending": "changes pending",
+        "rowsSelected": "{{count}} rows selected"
+      },
+      "buttons": {
+        "reset": "Reset",
+        "confirm": "Confirm",
+        "exportCsv": "Export CSV"
+      },
+      "tooltips": {
+        "refresh": "Refresh Data",
+        "addRow": "Add New Row",
+        "deleteRow": "Delete Selected Row",
+        "preview": "Preview Commit",
+        "withdraw": "Withdraw All Changes",
+        "submit": "Submit Changes",
+        "exportCsv": "Export"
+      },
+      "export": {
+        "title": "Export {{format}} File",
+        "cancelled": "Export cancelled",
+        "success": "Export successful: {{count}} rows saved to {{path}}",
+        "failed": "Export failed: {{error}}",
+        "dialogTitle": "Select Export Range",
+        "dialogMessage": "Total {{totalRows}} rows, please select export range",
+        "exportAll": "Export All",
+        "exportCurrent": "Export Current Page"
+      },
+      "pagination": {
+        "showing": "Showing {{start}}-{{end}} of {{total}} rows",
+        "pageSize": "Page size"
+      },
+      "loading": "Loading...",
+      "errors": {
+        "connectFailed": "Connection failed: {{error}}",
+        "loadDataFailed": "Failed to load data: {{error}}",
+        "cannotDeterminePk": "Cannot update: unable to determine base table primary key",
+        "pkColumnNotFound": "Cannot find primary key column {{name}} mapping in view",
+        "submitFailed": "Failed to submit changes: {{error}}"
+      }
+    }
+  },
+  "functionTab": {
+    "newFunction": "New Function",
+    "newProcedure": "New Procedure",
+    "editFunction": "Function - {{name}}",
+    "editProcedure": "Procedure - {{name}}",
+    "toolbar": {
+      "refresh": "Refresh",
+      "new": "New",
+      "execute": "Execute",
+      "save": "Save"
+    },
+    "properties": {
+      "name": "Name",
+      "type": "Type",
+      "returnType": "Return Type",
+      "deterministic": "Deterministic",
+      "comment": "Comment",
+      "placeholders": {
+        "functionName": "Function name",
+        "procedureName": "Procedure name",
+        "returnType": "e.g., INT, VARCHAR(255)",
+        "functionComment": "Function comment",
+        "procedureComment": "Procedure comment"
+      }
+    },
+    "types": {
+      "function": "Function",
+      "procedure": "Procedure"
+    },
+    "editor": {
+      "label": "Definition:"
+    },
+    "status": {
+      "ready": "Ready",
+      "loading": "Loading...",
+      "loadComplete": "Load Complete",
+      "loadFailed": "Load Failed",
+      "saving": "Saving...",
+      "saveSuccess": "Save Successful",
+      "saveFailed": "Save Failed"
+    },
+    "loading": "Loading {{type}}...",
+    "template": {
+      "functionComment": "-- Function logic",
+      "procedureComment": "-- Procedure logic"
+    },
+    "executeDialog": {
+      "title": "Execute {{type}}: {{name}}",
+      "params": "Parameters:",
+      "result": "Result:",
+      "tabs": {
+        "message": "Message",
+        "data": "Data"
+      },
+      "noParams": "No parameters required",
+      "loadingParams": "Loading parameter information...",
+      "placeholder": "Enter {{type}} value",
+      "noData": "No data",
+      "defaultMessage": "Execution messages will appear here...",
+      "close": "Close",
+      "execute": "Execute",
+      "resultSetSelector": "Select Result Set",
+      "resultSetLabel": "Result Set {{index}} ({{count}} rows)"
+    },
+    "errors": {
+      "loadFailed": "Failed to load {{type}} definition",
+      "loadError": "Failed to load {{type}}: {{error}}",
+      "enterName": "Please enter {{type}} name",
+      "enterCode": "Please enter {{type}} definition code",
+      "saveError": "Failed to save: {{error}}",
+      "executeSaveFirst": "Please save before executing",
+      "loadParamsFailed": "Failed to load parameters: {{error}}"
+    },
+    "success": {
+      "saved": "{{type}} saved"
+    },
+    "execute": {
+      "success": "Execution successful, returned {{count}} row(s)",
+      "multiResultSuccess": "Execution successful, returned {{setCount}} result sets with {{totalRows}} total rows",
+      "outParams": "Execution successful, output parameters: {{params}}",
+      "failed": "Execution failed: {{error}}"
+    }
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "metadataTree": {
+    "columns": "字段",
+    "indexes": "索引",
+    "foreignKeys": "外键",
+    "checks": "检查",
+    "triggers": "触发器",
+    "tables": "表",
+    "views": "视图",
+    "functions": "函数",
+    "noTables": "无表",
+    "noViews": "无视图",
+    "noFunctions": "无函数",
+    "noColumns": "无字段",
+    "noIndexes": "无索引",
+    "noForeignKeys": "无外键",
+    "noChecks": "无检查约束",
+    "noTriggers": "无触发器",
+    "noParams": "无参数",
+    "loadingDatabases": "正在加载数据库...",
+    "databasesLoaded": "已加载数据库: {{count}} 个",
+    "connectionFailed": "连接失败",
+    "connectionFailedWithError": "连接失败: {{error}}",
+    "connectionClosed": "连接已关闭",
+    "openDatabaseFailed": "打开数据库失败",
+    "databaseClosed": "数据库已关闭",
+    "loadFailed": "加载失败",
+    "creatingDatabase": "正在创建数据库...",
+    "databaseCreated": "数据库 '{{name}}' 已创建",
+    "createDatabaseFailed": "创建数据库失败",
+    "createFailed": "创建失败: {{error}}",
+    "systemDbProtected": "系统数据库受保护，无法删除！",
+    "confirmDeleteDatabase": "确认删除数据库",
+    "deleteDatabaseWarning": "确定要删除数据库 '{{name}}' 吗？\n所有数据将永久丢失！",
+    "deletingDatabase": "正在删除数据库...",
+    "databaseDeleted": "数据库 '{{name}}' 已删除",
+    "deleteDatabaseFailed": "删除数据库失败",
+    "deleteFailed": "删除失败: {{error}}",
+    "confirmDeleteConnection": "确认删除连接",
+    "deleteConnectionWarning": "确定要删除连接 '{{name}}' 吗？\n此操作不可撤销。",
+    "connectionDeleted": "连接 '{{name}}' 已删除",
+    "noMetadataToRefresh": "没有可刷新的已连接元数据",
+    "refreshingMetadata": "正在刷新元数据...",
+    "metadataRefreshed": "元数据刷新完成",
+    "openConnection": "打开连接",
+    "closeConnection": "关闭连接",
+    "newDatabase": "新建数据库",
+    "editConnection": "编辑连接",
+    "deleteConnection": "删除连接",
+    "systemDbWarning": "⚠️ 系统数据库 - 谨慎操作",
+    "openDatabase": "打开数据库",
+    "closeDatabase": "关闭数据库",
+    "deleteDatabase": "删除数据库",
+    "deleteSystemDb": "删除数据库 (系统数据库受保护)",
+    "noConnections": "暂无连接",
+    "addConnectionHint": "点击工具栏的\"新建连接\"添加",
+    "openSystemDbTitle": "打开系统数据库",
+    "openSystemDbWarning": "⚠️ 警告：您即将打开系统数据库！\n\n系统数据库包含MySQL服务器运行所需的关键数据，不当操作可能导致服务器无法正常运行。\n\n请确保您了解正在进行的操作，并谨慎行事！",
+    "maxConnectionsReached": "连接数已达上限 ({{current}}/{{max}})",
+    "newObject": "新建",
+    "openTable": "打开表",
+    "newTable": "新建表",
+    "designTable": "设计表",
+    "deleteTable": "删除表",
+    "openView": "打开视图",
+    "newView": "新建视图",
+    "editView": "编辑视图",
+    "deleteView": "删除视图",
+    "viewDefinition": "查看定义",
+    "openFunction": "打开函数",
+    "newFunction": "新建函数",
+    "editFunction": "编辑函数",
+    "executeFunction": "执行函数",
+    "deleteFunction": "删除函数",
+    "confirmDeleteObjectTitle": "确认删除对象",
+    "confirmDeleteObjectMessage": "确定要删除{{objectType}} '{{name}}' 吗？\n此操作不可撤销。",
+    "objectTypeTable": "表",
+    "objectTypeView": "视图",
+    "objectTypeFunction": "函数",
+    "objectTypeProcedure": "存储过程",
+    "objectTypeColumn": "字段",
+    "objectTypeIndex": "索引",
+    "objectTypeForeignKey": "外键",
+    "objectTypeCheck": "检查约束",
+    "objectTypeTrigger": "触发器",
+    "editObject": "编辑{{objectType}}",
+    "newObjectWithType": "新建{{objectType}}",
+    "deleteObjectWithType": "删除{{objectType}}",
+    "renameObject": "重命名",
+    "renamePrompt": "请输入{{objectType}}“{{name}}”的新名称",
+    "objectDeleted": "{{objectType}} '{{name}}' 已删除",
+    "objectDeleteFailed": "删除对象失败",
+    "objectDeleteFailedWithError": "删除对象失败: {{error}}"
+  },
+  "tableDataTab": {
+    "buttons": {
+      "refresh": "刷新",
+      "addRow": "添加行",
+      "deleteRow": "删除行",
+      "preview": "预览提交",
+      "withdraw": "撤回",
+      "submit": "提交更改",
+      "reset": "重置",
+      "confirm": "确认",
+      "export": "导出",
+      "import": "导入",
+      "exportCsv": "导出CSV"
+    },
+    "tooltips": {
+      "refresh": "刷新数据",
+      "addRow": "添加新行",
+      "deleteRow": "删除选中行",
+      "preview": "预览提交",
+      "withdraw": "撤回所有更改",
+      "submit": "提交更改",
+      "export": "导出数据",
+      "import": "导入数据",
+      "exportCsv": "导出CSV"
+    },
+    "export": {
+      "title": "导出{{format}}文件",
+      "cancelled": "导出已取消",
+      "success": "导出成功：{{count}} 行数据已保存到 {{path}}",
+      "failed": "导出失败：{{error}}",
+      "dialogTitle": "选择导出范围",
+      "dialogMessage": "共有 {{totalRows}} 行数据，请选择导出范围",
+      "exportAll": "导出全表",
+      "exportCurrent": "导出当前页"
+    },
+    "import": {
+      "title": "导入{{format}}文件",
+      "cancelled": "导入已取消",
+      "success": "导入成功：{{count}} 行数据已导入",
+      "failed": "导入失败：{{error}}"
+    },
+    "format": {
+      "csv": "CSV",
+      "txt": "TXT",
+      "json": "JSON",
+      "html": "HTML",
+      "xml": "XML",
+      "sql": "SQL",
+      "xlsx": "XLSX"
+    },
+    "changesPending": "{{count}} 项更改待提交",
+    "rowsSelected": "已选择 {{count}} 行",
+    "loading": "加载中...",
+    "pagination": {
+      "showingRows": "显示 {{start}}-{{end}} 行，共 {{total}} 行",
+      "pageSize": "每页显示:",
+      "pageInfo": "第 {{page}} / {{totalPages}} 页"
+    },
+    "errors": {
+      "connectionFailed": "连接失败: {{error}}",
+      "loadDataFailed": "加载数据失败: {{error}}",
+      "submitFailed": "提交更改失败: {{error}}"
+    },
+    "contextMenu": {
+      "copy": "复制",
+      "copyRow": "复制行",
+      "edit": "编辑",
+      "cancel": "取消"
+    }
+  },
+  "userTab": {
+    "username": "用户名",
+    "host": "主机",
+    "plugin": "认证插件",
+    "status": "状态",
+    "searchPlaceholder": "搜索用户...",
+    "totalCount": "共 {{count}} 个用户",
+    "loading": "正在加载用户列表...",
+    "empty": "暂无用户",
+    "loadFailed": "加载用户列表失败: {{error}}",
+    "newUser": "新建用户",
+    "deleteConfirm": "确定要删除用户 <strong>{{username}}@{{host}}</strong> 吗？",
+    "deleteWarning": "此操作不可撤销。",
+    "deleteFailed": "删除用户失败: {{error}}"
+  },
+  "userEditor": {
+    "newUser": "创建新用户",
+    "editUser": "编辑用户: {{username}}@{{host}}",
+    "tabs": {
+      "general": "常规",
+      "serverPrivileges": "服务器权限",
+      "databasePrivileges": "数据库权限",
+      "sqlPreview": "SQL 预览"
+    },
+    "form": {
+      "username": "用户名",
+      "host": "主机",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "authPlugin": "认证插件",
+      "required": "(required)",
+      "placeholders": {
+        "username": "输入用户名",
+        "host": "例如: % 或 localhost",
+        "passwordNew": "输入密码",
+        "passwordEdit": "留空表示不修改密码",
+        "confirmPassword": "再次输入密码"
+      }
+    },
+    "databasePrivileges": {
+      "add": "添加",
+      "name": "名称",
+      "operation": "操作",
+      "hint": "请选择数据库、表、字段后点击\"添加\"，在下方按作用域配置权限。"
+    },
+    "buttons": {
+      "save": "保存",
+      "saving": "保存中..."
+    },
+    "loading": "正在加载用户数据...",
+    "systemUserConfirm": {
+      "title": "修改系统用户",
+      "message": "⚠️ 警告：您即将修改系统用户 {{username}}@{{host}}！\n\n系统用户与 MySQL 服务器运行和内部机制密切相关，不当修改可能导致认证异常、权限问题或服务不可用。\n\n请确认您已了解风险，并确认继续保存。",
+      "confirm": "确认修改",
+      "cancel": "取消"
+    },
+    "errors": {
+      "loadFailed": "加载用户数据失败: {{error}}",
+      "usernameRequired": "用户名不能为空",
+      "hostRequired": "主机不能为空",
+      "passwordRequired": "密码不能为空",
+      "passwordMismatch": "两次输入的密码不一致",
+      "saveFailed": "保存失败: {{error}}",
+      "generateSqlFailed": "-- 生成SQL失败: {{error}}"
+    },
+    "success": {
+      "userCreated": "用户创建成功",
+      "userUpdated": "用户更新成功"
+    }
+  },
+  "previewCommit": {
+    "dialog": {
+      "title": "预览提交 - {{database}}.{{tableName}}",
+      "viewTitle": "预览提交 - {{database}}.{{viewName}} (基表: {{baseTableName}})",
+      "tabs": {
+        "changes": "变更详情",
+        "associations": "预览关联"
+      },
+      "changes": {
+        "noData": "没有变更数据",
+        "recordCount": "共 {{count}} 条变更记录",
+        "operation": "操作",
+        "operations": {
+          "new": "新增",
+          "modified": "修改",
+          "deleted": "删除"
+        },
+        "pkIndicator": "PK"
+      },
+      "associations": {
+        "loading": "加载关联信息...",
+        "noAssociations": "没有发现关联的约束或触发器影响",
+        "viewNoAssociations": "基表没有发现关联的约束或触发器影响",
+        "baseTable": "基表",
+        "baseTableInfo": "以下关联信息来自基表，您的修改将直接影响基表数据",
+        "trigger": "触发器",
+        "foreignKeyConstraint": "[外键约束] 本表字段 '{{myColumn}}' → 父表 '{{refTable}}.{{refColumn}}'",
+        "viewForeignKeyConstraint": "[外键约束] 基表字段 '{{myColumn}}' → 父表 '{{refTable}}.{{refColumn}}'",
+        "dependencyCheck": "[依赖检查] 子表 '{{refTable}}' (外键 '{{refColumn}}' → 本表 '{{myColumn}}') 包含相关数据:",
+        "viewDependencyCheck": "[依赖检查] 子表 '{{refTable}}' (外键 '{{refColumn}}' → 基表 '{{myColumn}}') 包含相关数据:",
+        "moreRows": "还有 {{count}} 行数据...",
+        "missingValuesWarning": "父表 ({{parentTable}}) 中不存在以下引用值，提交将会失败",
+        "dependencyWarning": "存在依赖数据，提交变更可能导致外键冲突错误或触发级联操作"
+      },
+      "viewInfo": {
+        "title": "视图操作提示：",
+        "description": "您正在通过视图 {{viewName}} 修改基表 {{baseTableName}} 的数据。以下变更将直接作用于基表。"
+      },
+      "errors": {
+        "loadAssociationsFailed": "加载关联信息失败: {{error}}"
+      },
+      "close": "关闭"
+    }
+  }
+}

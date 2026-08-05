@@ -1,0 +1,184 @@
+{
+  "menu": {
+    "file": {
+      "title": "File",
+      "newConnection": "New Connection",
+      "newQuery": "New Query",
+      "open": "Open SQL File...",
+      "save": "Save",
+      "saveAs": "Save As...",
+      "invalidateCache": "Invalidate Cache",
+      "invalidateCacheConfirmTitle": "Invalidate Cache",
+      "invalidateCacheConfirmMessage": "This action clears cache files under .database-workbench/cache and restarts the app after confirmation.\nCritical data such as data sources and connection profiles will not be affected.\n\nContinue?",
+      "invalidateCacheDone": "Cache invalidated. Restarting application...",
+      "invalidateCacheFailed": "Failed to invalidate cache",
+      "exit": "Exit"
+    },
+    "edit": {
+      "title": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "selectAll": "Select All",
+      "find": "Find",
+      "replace": "Replace"
+    },
+    "view": {
+      "title": "View",
+      "toolbar": "Toolbar",
+      "statusbar": "Status Bar",
+      "sidebar": "Sidebar",
+      "properties": "Properties",
+      "refresh": "Refresh",
+      "toggleSidebar": "Toggle Sidebar",
+      "toggleStatusbar": "Toggle Status Bar",
+      "hideStatusbar": "Hide Status Bar",
+      "showStatusbar": "Show Status Bar"
+    },
+    "favorites": {
+      "title": "Favorites",
+      "add": "Add to Favorites",
+      "manage": "Manage Favorites",
+      "sqlQueries": "SQL Queries",
+      "connections": "Connections",
+      "empty": "No Favorites",
+      "use": "Use Favorite",
+      "opened": "Opened Favorite",
+      "connection": "Connection Favorite",
+      "object": "Database Object Favorite",
+      "added": "Favorite Added",
+      "addFailed": "Failed to Add Favorite"
+    },
+    "tools": {
+      "title": "Tools",
+      "options": "Options",
+      "backup": "Backup Database...",
+      "restore": "Restore Database...",
+      "importConnections": "Import Connections...",
+      "exportConnections": "Export Connections...",
+      "noConnectionsToExport": "No connection profiles available to export",
+      "selectAtLeastOneConnection": "Please select at least one connection profile",
+      "exportConnectionsSelectTitle": "Select Connection Profiles to Export",
+      "exportConnectionsSelectDescription": "Choose the connection profiles to export:",
+      "exportConnectionsSaved": "Exported {{count}} connections to {{filePath}}",
+      "importConnectionsOverwritePrompt": "Connection \"{{name}}\" already exists with different settings. Overwrite existing profile?",
+      "importConnectionsSummary": "Import completed: created {{created}}, updated {{updated}}, skipped {{skipped}}"
+    },
+    "window": {
+      "title": "Window",
+      "maximize": "Maximize",
+      "minimize": "Minimize",
+      "closeCurrentTab": "Close Current Tab",
+      "closeAllTabs": "Close All Tabs",
+      "toggleTheme": "Toggle Theme"
+    },
+    "help": {
+      "title": "Help",
+      "documentation": "Documentation",
+      "shortcuts": "Keyboard Shortcuts",
+      "mysqlDocs": "MySQL Documentation",
+      "checkUpdate": "Check for Updates...",
+      "about": "About Database Workbench"
+    }
+  },
+  "toolbar": {
+    "connection": "Connection",
+    "database": "Database",
+    "query": "Query",
+    "table": "Table",
+    "view": "View",
+    "function": "Function",
+    "backup": "Backup",
+    "restore": "Restore",
+    "refresh": "Refresh",
+    "user": "User"
+  },
+  "statusBar": {
+    "ready": "Ready",
+    "showSidebar": "Show Sidebar",
+    "hideSidebar": "Hide Sidebar",
+    "switchToLight": "Switch to Light Theme",
+    "switchToDark": "Switch to Dark Theme",
+    "connections": "Connections",
+    "databases": "Databases",
+    "tables": "Tables"
+  },
+  "sidebar": {
+    "searchPlaceholder": "Search...",
+    "expandSidebar": "Expand Sidebar",
+    "collapseSidebar": "Collapse Sidebar",
+    "executionLog": {
+      "title": "Execution Logs",
+      "clear": "Clear logs",
+      "show": "Show execution logs",
+      "hide": "Hide execution logs",
+      "jumpLatest": "Jump to latest",
+      "autoFollowOn": "Auto-follow: on",
+      "autoFollowOff": "Auto-follow: off",
+      "emptyTitle": "No execution logs",
+      "emptyHint": "SQL execution events will be streamed here",
+      "pageInfo": "Page {{current}} / {{total}} · {{pageSize}} per page · {{totalLogs}} total"
+    }
+  },
+  "welcome": {
+    "title": "Database Workbench",
+    "subtitle": "Database Workbench",
+    "start": "Start",
+    "recent": "Recent",
+    "newConnection": "New Connection",
+    "newQuery": "New Query",
+    "openFile": "Open SQL File...",
+    "noRecentFiles": "No recent files",
+    "clearRecent": "Clear Recent"
+  },
+  "welcomeTab": {
+    "subtitle": "数据库工作台",
+    "startSection": "Start",
+    "newConnection": "New Connection",
+    "newQuery": "New Query",
+    "openSqlFile": "Open SQL File...",
+    "recentSection": "Recent",
+    "clearRecentFiles": "Clear Recent Files",
+    "noRecentFiles": "No recent files",
+    "sqlFiles": "SQL Files",
+    "allFiles": "All Files",
+    "untitled": "Untitled.sql",
+    "status": {
+      "openNewConnection": "Opening new connection dialog",
+      "newQuery": "New query",
+      "openFile": "Opening file: {{name}}",
+      "openFileFailed": "Failed to open file: {{error}}",
+      "clearRecentFiles": "Clearing recent files list"
+    },
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{{minutes}} min ago",
+      "hoursAgo": "{{hours}} hr ago",
+      "daysAgo": "{{days}} days ago"
+    }
+  },
+  "tabTitles": {
+    "welcome": "Welcome",
+    "unknownConnection": "Unknown Connection",
+    "tableData": "{{tableName}}@{{database}}({{connectionName}}) - Table",
+    "viewData": "{{viewName}}@{{database}}({{connectionName}}) - View",
+    "designer": {
+      "edit": "Table Design - {{tableName}}",
+      "newWithDatabase": "New Table - {{database}}",
+      "new": "New Table"
+    },
+    "viewDesigner": "View - {{viewName}}",
+    "functionDesigner": {
+      "editFunction": "Function - {{name}}",
+      "editProcedure": "Procedure - {{name}}",
+      "newFunction": "New Function",
+      "newProcedure": "New Procedure"
+    },
+    "userEditor": {
+      "edit": "User - {{username}}@{{host}}",
+      "new": "New User"
+    }
+  }
+}

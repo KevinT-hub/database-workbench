@@ -1,0 +1,184 @@
+{
+  "menu": {
+    "file": {
+      "title": "文件",
+      "newConnection": "新建连接",
+      "newQuery": "新建查询",
+      "open": "打开 SQL 文件...",
+      "save": "保存",
+      "saveAs": "另存为...",
+      "invalidateCache": "使缓存失效",
+      "invalidateCacheConfirmTitle": "使缓存失效",
+      "invalidateCacheConfirmMessage": "此操作将清理 .database-workbench/cache 下的缓存文件，并在确认后重启应用。\n不会影响数据源、连接配置等关键信息。\n\n是否继续？",
+      "invalidateCacheDone": "缓存已失效，应用即将重启...",
+      "invalidateCacheFailed": "使缓存失效失败",
+      "exit": "退出"
+    },
+    "edit": {
+      "title": "编辑",
+      "undo": "撤销",
+      "redo": "重做",
+      "cut": "剪切",
+      "copy": "复制",
+      "paste": "粘贴",
+      "selectAll": "全选",
+      "find": "查找",
+      "replace": "替换"
+    },
+    "view": {
+      "title": "查看",
+      "toolbar": "工具栏",
+      "statusbar": "状态栏",
+      "sidebar": "侧边栏",
+      "properties": "属性",
+      "refresh": "刷新",
+      "toggleSidebar": "显示/隐藏 导航栏",
+      "toggleStatusbar": "显示/隐藏 状态栏",
+      "hideStatusbar": "隐藏状态栏",
+      "showStatusbar": "显示状态栏"
+    },
+    "favorites": {
+      "title": "收藏夹",
+      "add": "添加到收藏夹",
+      "manage": "管理收藏夹",
+      "sqlQueries": "SQL 查询",
+      "connections": "连接配置",
+      "empty": "暂无收藏",
+      "use": "使用收藏",
+      "opened": "已打开收藏",
+      "connection": "连接配置收藏",
+      "object": "数据库对象收藏",
+      "added": "收藏已添加",
+      "addFailed": "添加收藏失败"
+    },
+    "tools": {
+      "title": "工具",
+      "options": "选项",
+      "backup": "备份数据库...",
+      "restore": "还原数据库...",
+      "importConnections": "导入连接配置...",
+      "exportConnections": "导出连接配置...",
+      "noConnectionsToExport": "当前没有可导出的连接配置",
+      "selectAtLeastOneConnection": "请至少选择一个连接配置",
+      "exportConnectionsSelectTitle": "选择要导出的连接配置",
+      "exportConnectionsSelectDescription": "请选择本次要导出的连接配置：",
+      "exportConnectionsSaved": "已导出 {{count}} 个连接到 {{filePath}}",
+      "importConnectionsOverwritePrompt": "连接 \"{{name}}\" 已存在且配置不同，是否覆盖现有配置？",
+      "importConnectionsSummary": "导入完成：新增 {{created}}，覆盖 {{updated}}，跳过 {{skipped}}"
+    },
+    "window": {
+      "title": "窗口",
+      "maximize": "最大化",
+      "minimize": "最小化",
+      "closeCurrentTab": "关闭当前标签",
+      "closeAllTabs": "关闭所有标签",
+      "toggleTheme": "切换主题"
+    },
+    "help": {
+      "title": "帮助",
+      "documentation": "使用文档",
+      "shortcuts": "快捷键参考",
+      "mysqlDocs": "MySQL 官方文档",
+      "checkUpdate": "检查更新...",
+      "about": "关于 Database Workbench"
+    }
+  },
+  "toolbar": {
+    "connection": "新建连接",
+    "database": "数据库",
+    "query": "查询",
+    "table": "表",
+    "view": "视图",
+    "function": "函数",
+    "backup": "备份",
+    "restore": "还原",
+    "refresh": "刷新",
+    "user": "用户"
+  },
+  "statusBar": {
+    "ready": "就绪",
+    "showSidebar": "显示导航栏",
+    "hideSidebar": "隐藏导航栏",
+    "switchToLight": "切换到浅色主题",
+    "switchToDark": "切换到深色主题",
+    "connections": "连接",
+    "databases": "数据库",
+    "tables": "表"
+  },
+  "sidebar": {
+    "searchPlaceholder": "搜索...",
+    "expandSidebar": "展开导航栏",
+    "collapseSidebar": "折叠导航栏",
+    "executionLog": {
+      "title": "执行日志",
+      "clear": "清空日志",
+      "show": "显示执行日志",
+      "hide": "收起执行日志",
+      "jumpLatest": "跳转到最新",
+      "autoFollowOn": "自动跟随：开启",
+      "autoFollowOff": "自动跟随：关闭",
+      "emptyTitle": "暂无执行日志",
+      "emptyHint": "SQL 执行信息会实时显示在这里",
+      "pageInfo": "第 {{current}} / {{total}} 页 · 每页 {{pageSize}} 条 · 共 {{totalLogs}} 条"
+    }
+  },
+  "welcome": {
+    "title": "Database Workbench",
+    "subtitle": "数据库工作台",
+    "start": "开始",
+    "recent": "最近",
+    "newConnection": "新建连接",
+    "newQuery": "新建查询",
+    "openFile": "打开 SQL 文件...",
+    "noRecentFiles": "暂无最近文件",
+    "clearRecent": "清除最近文件"
+  },
+  "welcomeTab": {
+    "subtitle": "数据库工作台",
+    "startSection": "开始",
+    "newConnection": "新建连接",
+    "newQuery": "新建查询",
+    "openSqlFile": "打开 SQL 文件...",
+    "recentSection": "最近",
+    "clearRecentFiles": "清除最近文件",
+    "noRecentFiles": "暂无最近文件",
+    "sqlFiles": "SQL 文件",
+    "allFiles": "所有文件",
+    "untitled": "未命名.sql",
+    "status": {
+      "openNewConnection": "打开新建连接对话框",
+      "newQuery": "新建查询",
+      "openFile": "打开文件: {{name}}",
+      "openFileFailed": "打开文件失败: {{error}}",
+      "clearRecentFiles": "清除最近文件列表"
+    },
+    "time": {
+      "justNow": "刚刚",
+      "minutesAgo": "{{minutes}} 分钟前",
+      "hoursAgo": "{{hours}} 小时前",
+      "daysAgo": "{{days}} 天前"
+    }
+  },
+  "tabTitles": {
+    "welcome": "欢迎页",
+    "unknownConnection": "未知连接",
+    "tableData": "{{tableName}}@{{database}}({{connectionName}}) - 表",
+    "viewData": "{{viewName}}@{{database}}({{connectionName}}) - 视图",
+    "designer": {
+      "edit": "表设计 - {{tableName}}",
+      "newWithDatabase": "新建表 - {{database}}",
+      "new": "新建表"
+    },
+    "viewDesigner": "视图 - {{viewName}}",
+    "functionDesigner": {
+      "editFunction": "函数 - {{name}}",
+      "editProcedure": "存储过程 - {{name}}",
+      "newFunction": "新建函数",
+      "newProcedure": "新建存储过程"
+    },
+    "userEditor": {
+      "edit": "用户 - {{username}}@{{host}}",
+      "new": "新建用户"
+    }
+  }
+}
