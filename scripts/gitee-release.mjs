@@ -85,6 +85,13 @@ async function findRelease(tag) {
   return releases.find((release) => release.tag_name === tag);
 }
 
+async function getDefaultBranch() {
+  const repo = await request(
+    `/repos/${OWNER}/${REPO}?access_token=${encodeURIComponent(TOKEN)}`,
+  );
+  return repo.default_branch || 'master';
+}
+
 async function createRelease(tag, title, notes) {
   const form = new URLSearchParams();
   form.set('access_token', TOKEN);
@@ -92,6 +99,9 @@ async function createRelease(tag, title, notes) {
   form.set('name', title || tag);
   form.set('body', notes || '');
   form.set('prerelease', 'false');
+  // Gitee requires a branch/commit to create the tag from when the tag does
+  // not exist on the repository yet (we never push code to Gitee).
+  form.set('target_commitish', await getDefaultBranch());
 
   const release = await request(`/repos/${OWNER}/${REPO}/releases`, {
     method: 'POST',
