@@ -64,8 +64,8 @@ jobs:
           set -euo pipefail
           TAG="${{ steps.tag.outputs.tag }}"
           mkdir -p artifacts
-          gh api "repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tags/${TAG}" \
-            --jq '.assets[] | [.name, .browser_download_url] | @tsv' > assets.tsv
+          gh release view "$TAG" --json assets \
+            --jq '.assets[] | [.name, .url] | @tsv' > assets.tsv
           if [ ! -s assets.tsv ]; then
             echo "::error::Release $TAG has no downloadable assets"
             exit 1
@@ -104,9 +104,8 @@ jobs:
         run: |
           TAG="${{ steps.tag.outputs.tag }}"
           VERSION="${TAG#v}"
-          RELEASE_JSON=$(gh api "repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tags/${TAG}")
-          NOTES=$(printf '%s' "$RELEASE_JSON" | jq -r '.body // ""')
-          PUB_DATE=$(printf '%s' "$RELEASE_JSON" | jq -r '.published_at // ""')
+          NOTES=$(gh release view "$TAG" --json body --jq '.body // ""')
+          PUB_DATE=$(gh release view "$TAG" --json publishedAt --jq '.publishedAt // ""')
           node scripts/update-latest.mjs \
             --from-dir artifacts \
             --version "$VERSION" \
