@@ -1,0 +1,125 @@
+name: Mirror release to Gitee
+
+on:
+  workflow_run:
+    workflows: ["Release Build"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'GitHub release tag to mirror (default: latest release)'
+        required: false
+        default: ''
+      gh_proxy:
+        description: 'GitHub download mirror proxy prefix (leave empty to disable)'
+        required: false
+        default: 'https://ghfast.top'
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    name: Mirror release assets to Gitee
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITEE_ACCESS_TOKEN: ${{ secrets.GITEE_ACCESS_TOKEN }}
+      GITHUB_OWNER: KevinT-hub
+      GITHUB_REPO: database-workbench
+      GITEE_OWNER: kevint-hub
+      GITEE_REPO: database-workbench
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Resolve tag
+        id: tag
+        run: |
+          TAG=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            TAG="${{ github.event.workflow_run.head_branch }}"
+            case "$TAG" in v*) ;; *) TAG="" ;; esac
+          fi
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+          fi
+          if [ -z "$TAG" ]; then
+            echo "::error::No GitHub release found to mirror"
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Download GitHub release assets
+        env:
+          GH_PROXY: ${{ github.event.inputs.gh_proxy }}
+        run: |
+          set -euo pipefail
+          TAG="${{ steps.tag.outputs.tag }}"
+          mkdir -p artifacts
+          gh release view "$TAG" --json assets \
+            --jq '.assets[] | [.name, .browser_download_url] | @tsv' > assets.tsv
+          if [ ! -s assets.tsv ]; then
+            echo "::error::Release $TAG has no downloadable assets"
+            exit 1
+          fi
+          while IFS=$'\t' read -r NAME URL; do
+            [ -n "$NAME" ] || continue
+            echo "Downloading $NAME"
+            if [ -n "$GH_PROXY" ]; then
+              if curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                   "${GH_PROXY}${URL}" -o "artifacts/$NAME"; then
+                :
+              else
+                echo "[warn] proxy failed for $NAME, falling back to GitHub direct"
+                curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                  "$URL" -o "artifacts/$NAME"
+              fi
+            else
+              curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                "$URL" -o "artifacts/$NAME"
+            fi
+          done < assets.tsv
+
+      - name: Show artifacts
+        run: find artifacts -type f -printf '%P\n' | sort
+
+      - name: Mirror installers to Gitee release
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          node scripts/gitee-release.mjs \
+            --tag "$TAG" \
+            --dir artifacts \
+            --title "Database Workbench $TAG" \
+            --notes "Mirrored from GitHub release $TAG."
+
+      - name: Generate Gitee latest.json
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          VERSION="${TAG#v}"
+          NOTES=$(gh release view "$TAG" --json body --jq '.body // ""')
+          PUB_DATE=$(gh release view "$TAG" --json publishedAt --jq '.publishedAt // ""')
+          node scripts/update-latest.mjs \
+            --from-dir artifacts \
+            --version "$VERSION" \
+            --tag "$TAG" \
+            --notes "$NOTES" \
+            --pub-date "$PUB_DATE" \
+            --base-url "https://gitee.com/${GITEE_OWNER}/${GITEE_REPO}/releases/download" \
+            --output update-gitee/latest.json
+
+      - name: Mirror latest.json to Gitee update channel
+        run: |
+          node scripts/gitee-release.mjs \
+            --tag update \
+            --dir update-gitee \
+            --replace \
+            --title "Auto-update channel" \
+            --notes "Auto-generated latest.json for the stable update channel."

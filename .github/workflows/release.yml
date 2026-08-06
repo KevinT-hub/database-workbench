@@ -109,6 +109,25 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
 
+      - name: Disambiguate macOS updater artifacts
+        if: matrix.os == 'macos-latest'
+        run: |
+          set -euo pipefail
+          VERSION="${{ needs.check-version.outputs.version }}"
+          case "${{ matrix.target }}" in
+            aarch64-apple-darwin) ARCH=aarch64 ;;
+            x86_64-apple-darwin) ARCH=x64 ;;
+          esac
+          cd "src-tauri/target/${{ matrix.target }}/release/bundle/macos"
+          for src in *.app.tar.gz; do
+            base="${src%.app.tar.gz}"
+            mv "$src" "${base}_${VERSION}_${ARCH}.app.tar.gz"
+          done
+          for src in *.app.tar.gz.sig; do
+            base="${src%.app.tar.gz.sig}"
+            mv "$src" "${base}_${VERSION}_${ARCH}.app.tar.gz.sig"
+          done
+
       - name: Upload bundles
         uses: actions/upload-artifact@v4
         with:

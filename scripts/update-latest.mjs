@@ -4,11 +4,12 @@
  * mirroring the clash-verge-rev updater-release practice.
  *
  * Usage:
- *   node scripts/update-latest.mjs --from-dir <dir> --version <v> --tag <t> [--notes <notes>]
- *   node scripts/update-latest.mjs --from-release [--tag <t>]
+ *   node scripts/update-latest.mjs --from-dir <dir> --version <v> --tag <t> [--notes <notes>] [--base-url <url>] [--output <file>] [--pub-date <iso>]
+ *   node scripts/update-latest.mjs --from-release [--tag <t>] [--output <file>]
  *
  * Outputs:
- *   latest.json -> latest.json with GitHub download URLs
+ *   latest.json by default, or the path passed via --output.
+ *   Download URLs default to GitHub; pass --base-url to generate a Gitee channel.
  *
  * Required env (from-release mode):
  *   GH_TOKEN, GITHUB_OWNER, GITHUB_REPO
@@ -26,6 +27,9 @@ const argValue = (name) => {
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'KevinT-hub';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'database-workbench';
+const BASE_URL = argValue('--base-url');
+const OUTPUT = argValue('--output');
+const PUB_DATE = argValue('--pub-date');
 
 const PLATFORM_RULES = [
   { re: /_x64-setup\.exe$/, key: 'windows-x86_64' },
@@ -43,8 +47,9 @@ function detectPlatform(fileName) {
   return null;
 }
 
-function githubDownloadUrl(tag, fileName) {
-  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/download/${tag}/${encodeURIComponent(fileName)}`;
+function releaseDownloadUrl(tag, fileName, baseUrl) {
+  const base = (baseUrl || `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/download`).replace(/\/+$/, '');
+  return `${base}/${tag}/${encodeURIComponent(fileName)}`;
 }
 
 function walkFiles(dir) {
@@ -60,21 +65,23 @@ function walkFiles(dir) {
   return results;
 }
 
-function writeOutputs(version, notes, platforms) {
+function writeOutputs(version, notes, platforms, outputPath = 'latest.json', pubDate = new Date().toISOString()) {
   const payload = {
     version,
     notes: notes || `Release ${version}`,
-    pub_date: new Date().toISOString(),
+    pub_date: pubDate,
     platforms,
   };
 
-  fs.writeFileSync('latest.json', `${JSON.stringify(payload, null, 2)}\n`);
+  const resolvedOutput = path.resolve(outputPath);
+  fs.mkdirSync(path.dirname(resolvedOutput), { recursive: true });
+  fs.writeFileSync(resolvedOutput, `${JSON.stringify(payload, null, 2)}\n`);
 
-  console.log('Generated latest.json:');
+  console.log(`Generated ${resolvedOutput}:`);
   console.log(JSON.stringify(payload, null, 2));
 }
 
-function buildFromDir(dir, version, tag, notes) {
+function buildFromDir(dir, version, tag, notes, baseUrl, outputPath, pubDate) {
   if (!fs.existsSync(dir)) {
     throw new Error(`Artifacts directory not found: ${dir}`);
   }
@@ -102,7 +109,7 @@ function buildFromDir(dir, version, tag, notes) {
 
     platforms[platform] = {
       signature,
-      url: githubDownloadUrl(tag, file),
+      url: releaseDownloadUrl(tag, file, baseUrl),
     };
     console.log(`[ok] ${platform} <- ${file}`);
   }
@@ -111,7 +118,7 @@ function buildFromDir(dir, version, tag, notes) {
     throw new Error('No updater artifacts found in directory');
   }
 
-  writeOutputs(version, notes, platforms);
+  writeOutputs(version, notes, platforms, outputPath, pubDate);
 }
 
 function gh(argsList) {
@@ -153,10 +160,11 @@ async function buildFromRelease(tag) {
     'api',
     `repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tags/${resolvedTag}`,
     '--jq',
-    '{tag_name, body, assets: [.assets[] | {name, browser_download_url}]}',
+    '{tag_name, body, published_at, assets: [.assets[] | {name, browser_download_url}]}',
   ]);
   const release = JSON.parse(releaseJson);
   const notes = release.body || `Release ${version}`;
+  const pubDate = PUB_DATE || release.published_at || new Date().toISOString();
 
   const platforms = {};
   const assets = release.assets;
@@ -174,7 +182,7 @@ async function buildFromRelease(tag) {
 
     platforms[platform] = {
       signature,
-      url: asset.browser_download_url,
+      url: releaseDownloadUrl(resolvedTag, asset.name, BASE_URL),
     };
     console.log(`[ok] ${platform} <- ${asset.name}`);
   }
@@ -183,7 +191,7 @@ async function buildFromRelease(tag) {
     throw new Error('No updater assets found on the release');
   }
 
-  writeOutputs(version, notes, platforms);
+  writeOutputs(version, notes, platforms, OUTPUT, pubDate);
 }
 
 async function main() {
@@ -193,13 +201,13 @@ async function main() {
     const tag = argValue('--tag');
     const notes = argValue('--notes');
     if (!dir || !version || !tag) {
-      throw new Error('--from-dir requires --dir/--version/--tag (--from-dir <dir>)');
+      throw new Error('--from-dir requires --from-dir/--version/--tag');
     }
-    buildFromDir(dir, version, tag, notes);
+    buildFromDir(dir, version, tag, notes, BASE_URL, OUTPUT, PUB_DATE);
   } else if (args.includes('--from-release')) {
     await buildFromRelease(argValue('--tag'));
   } else {
-    throw new Error('Usage: --from-dir <dir> --version <v> --tag <t> | --from-release [--tag <t>]');
+    throw new Error('Usage: --from-dir <dir> --version <v> --tag <t> [--base-url <url>] [--output <file>] | --from-release [--tag <t>] [--output <file>]');
   }
 }
 
