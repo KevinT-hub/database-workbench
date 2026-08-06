@@ -115,12 +115,17 @@ jobs:
           name: bundles-${{ matrix.artifact }}
           if-no-files-found: error
           path: |
-            src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*
-            src-tauri/target/${{ matrix.target }}/release/bundle/msi/*
-            src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*
-            src-tauri/target/${{ matrix.target }}/release/bundle/deb/*
-            src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*
-            src-tauri/target/${{ matrix.target }}/release/bundle/appimage/*
+            src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
+            src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.sig
+            src-tauri/target/${{ matrix.target }}/release/bundle/msi/*.msi
+            src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.sig
+            src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.deb
+            src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.sig
+            src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*.rpm
+            src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*.sig
+            src-tauri/target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
+            src-tauri/target/${{ matrix.target }}/release/bundle/appimage/*.sig
 
   release:
     name: Publish GitHub + Gitee releases
@@ -158,12 +163,32 @@ jobs:
 
       - name: Upload installers to GitHub release
         run: |
-          mapfile -t RELEASE_FILES < <(find artifacts -type f | sort)
-          if [ ${#RELEASE_FILES[@]} -eq 0 ]; then
+          mapfile -t ALL_FILES < <(find artifacts -type f | sort)
+          RELEASE_FILES=()
+          for f in "${ALL_FILES[@]}"; do
+            case "$f" in
+              *.exe|*.msi|*.dmg|*.deb|*.rpm|*.AppImage|*.sig)
+                RELEASE_FILES+=("$f")
+                ;;
+            esac
+          done
+
+          # Upload-artifact can keep duplicate basenames in different folders; dedupe them.
+          declare -A SEEN
+          UNIQUE_FILES=()
+          for f in "${RELEASE_FILES[@]}"; do
+            name=$(basename "$f")
+            if [[ -z "${SEEN[$name]+x}" ]]; then
+              SEEN[$name]=1
+              UNIQUE_FILES+=("$f")
+            fi
+          done
+
+          if [ ${#UNIQUE_FILES[@]} -eq 0 ]; then
             echo "::error::No release files found under artifacts/"
             exit 1
           fi
-          gh release upload "${{ needs.check-version.outputs.tag }}" "${RELEASE_FILES[@]}" --clobber
+          gh release upload "${{ needs.check-version.outputs.tag }}" "${UNIQUE_FILES[@]}" --clobber
 
       - name: Generate latest.json
         run: |

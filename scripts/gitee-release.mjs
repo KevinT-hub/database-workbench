@@ -39,6 +39,10 @@ function walkFiles(dir) {
   return results;
 }
 
+function isReleaseFile(filePath) {
+  return /\.(exe|msi|dmg|deb|rpm|AppImage|sig)$/i.test(filePath);
+}
+
 const GITEE_API = 'https://gitee.com/api/v5';
 const TOKEN = process.env.GITEE_ACCESS_TOKEN;
 const OWNER = process.env.GITEE_OWNER || 'kevint-hub';
@@ -136,11 +140,15 @@ async function main() {
   }
   const release = await createRelease(tag, title, notes);
 
-  const files = walkFiles(dir).sort();
+  const files = walkFiles(dir).filter(isReleaseFile).sort();
   if (files.length === 0) {
-    throw new Error(`No files to upload in ${dir}`);
+    throw new Error(`No release files to upload in ${dir}`);
   }
+  const seen = new Set();
   for (const file of files) {
+    const name = path.basename(file);
+    if (seen.has(name)) continue;
+    seen.add(name);
     await uploadAttachment(release.id, file);
   }
 
