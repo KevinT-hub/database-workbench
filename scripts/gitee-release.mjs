@@ -19,6 +19,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 const argValue = (name) => {
@@ -114,21 +115,39 @@ async function createRelease(tag, title, notes) {
 
 async function uploadAttachment(releaseId, filePath) {
   const fileName = path.basename(filePath);
-  const form = new FormData();
-  form.set('access_token', TOKEN);
-  form.set('name', fileName);
-  form.set('file', new File([fs.readFileSync(filePath)], fileName));
+  const size = fs.statSync(filePath).size;
+  console.log(`Uploading ${fileName} (${size} bytes)...`);
 
-  const response = await fetch(
+  // curl handles large multipart uploads more reliably than fetch and
+  // supports retries/timeouts for the often-slow Gitee endpoints.
+  const args = [
+    '-sS',
+    '-L',
+    '--fail-with-body',
+    '--retry',
+    '3',
+    '--retry-delay',
+    '5',
+    '--retry-all-errors',
+    '--connect-timeout',
+    '30',
+    '--max-time',
+    '1800',
+    '-F',
+    `access_token=${TOKEN}`,
+    '-F',
+    `name=${fileName}`,
+    '-F',
+    `file=@${filePath}`,
     `${GITEE_API}/repos/${OWNER}/${REPO}/releases/${releaseId}/attach_files`,
-    { method: 'POST', body: form },
-  );
-  const text = await response.text();
-  if (!response.ok) {
-    throw new Error(`Upload ${fileName} failed: HTTP ${response.status} ${text.slice(0, 300)}`);
+  ];
+
+  try {
+    execFileSync('curl', args, { stdio: 'inherit' });
+  } catch (error) {
+    throw new Error(`Upload ${fileName} failed: ${error.message}`);
   }
   console.log(`[ok] uploaded ${fileName}`);
-  return JSON.parse(text);
 }
 
 async function main() {
