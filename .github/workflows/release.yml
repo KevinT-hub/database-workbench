@@ -176,7 +176,7 @@ jobs:
         run: |
           gh release create "${{ needs.check-version.outputs.tag }}" \
             --title "Database Workbench ${{ needs.check-version.outputs.tag }}" \
-            --notes "Release ${{ needs.check-version.outputs.tag }}" \
+            --notes-file RELEASE_NOTES.md \
             --target "$GITHUB_SHA" || true
 
       - name: Upload installers to GitHub release
