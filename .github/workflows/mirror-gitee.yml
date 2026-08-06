@@ -7,6 +7,10 @@ on:
         description: 'GitHub release tag to mirror (default: latest release)'
         required: false
         default: ''
+      gh_proxy:
+        description: 'Mirror proxy prefix for GitHub downloads (leave default)'
+        required: false
+        default: 'https://ghfast.top'
 
 permissions:
   contents: read
@@ -43,10 +47,25 @@ jobs:
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Download GitHub release assets
+        env:
+          GH_PROXY: ${{ github.event.inputs.gh_proxy }}
         run: |
           TAG="${{ steps.tag.outputs.tag }}"
           mkdir -p artifacts
-          gh release download "$TAG" --dir artifacts --clobber
+          gh release view "$TAG" --json assets \
+            --jq '.assets[] | [.name, .browser_download_url] | @tsv' > assets.tsv
+          while IFS=$'\t' read -r NAME URL; do
+            echo "Downloading $NAME"
+            if [ -n "$GH_PROXY" ]; then
+              curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                "${GH_PROXY}${URL}" -o "artifacts/$NAME" || \
+              curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                "$URL" -o "artifacts/$NAME"
+            else
+              curl -fL --retry 3 --retry-all-errors --connect-timeout 30 --max-time 1200 \
+                "$URL" -o "artifacts/$NAME"
+            fi
+          done < assets.tsv
 
       - name: Show artifacts
         run: find artifacts -type f -printf '%P\n' | sort
@@ -73,5 +92,6 @@ jobs:
           node scripts/gitee-release.mjs \
             --tag update \
             --dir update-gitee \
+            --replace \
             --title "Auto-update channel" \
             --notes "Auto-generated latest.json for the stable update channel."

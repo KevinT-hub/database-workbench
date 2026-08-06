@@ -6,15 +6,16 @@
  * Gitee repository remain managed by the maintainer.
  *
  * Usage:
- *   node scripts/gitee-release.mjs --tag <tag> --dir <dir> [--title <title>] [--notes <notes>]
+ *   node scripts/gitee-release.mjs --tag <tag> --dir <dir> [--title <title>] [--notes <notes>] [--replace]
  *
  * Required env:
  *   GITEE_ACCESS_TOKEN (personal token with `projects` scope)
  * Optional env:
  *   GITEE_OWNER, GITEE_REPO
  *
- * The release is deleted and recreated when it already exists so uploads are
- * idempotent (Gitee does not allow replacing attachments in place).
+ * By default an existing release is kept and only missing attachments are
+ * uploaded (fast re-runs). Pass --replace (used for the update channel) to
+ * delete and recreate the release so the latest.json can be replaced.
  */
 
 import fs from 'node:fs';
@@ -84,6 +85,18 @@ async function findRelease(tag) {
       `/repos/${OWNER}/${REPO}/releases?access_token=${encodeURIComponent(TOKEN)}&per_page=100&page=1`,
     )) || [];
   return releases.find((release) => release.tag_name === tag);
+}
+
+async function listAttachmentNames(releaseId) {
+  try {
+    const attachments = await request(
+      `/repos/${OWNER}/${REPO}/releases/${releaseId}/attach_files?access_token=${encodeURIComponent(TOKEN)}&per_page=100`,
+    );
+    return new Set((attachments || []).map((attachment) => attachment.name));
+  } catch (error) {
+    console.warn(`[warn] could not list existing attachments: ${error.message}`);
+    return new Set();
+  }
 }
 
 async function getDefaultBranch() {
@@ -171,6 +184,7 @@ async function main() {
   const dir = argValue('--dir');
   const title = argValue('--title');
   const notes = argValue('--notes');
+  const replace = args.includes('--replace');
 
   if (!tag || !dir) {
     throw new Error('--tag and --dir are required');
@@ -180,24 +194,39 @@ async function main() {
   }
 
   const existing = await findRelease(tag);
+  let release;
   if (existing) {
-    await deleteRelease(existing.id);
+    if (replace) {
+      await deleteRelease(existing.id);
+      release = await createRelease(tag, title, notes);
+    } else {
+      release = existing;
+      console.log(`Using existing Gitee release ${tag} (id=${existing.id})`);
+    }
+  } else {
+    release = await createRelease(tag, title, notes);
   }
-  const release = await createRelease(tag, title, notes);
 
   const files = walkFiles(dir).filter(isReleaseFile).sort();
   if (files.length === 0) {
     throw new Error(`No release files to upload in ${dir}`);
   }
+  const existingNames = replace ? new Set() : await listAttachmentNames(release.id);
   const seen = new Set();
   const uniqueFiles = [];
   for (const file of files) {
     const name = path.basename(file);
     if (seen.has(name)) continue;
     seen.add(name);
+    if (existingNames.has(name)) {
+      console.log(`[skip] ${name} already exists on Gitee`);
+      continue;
+    }
     uniqueFiles.push(file);
   }
-  await uploadAll(release.id, uniqueFiles);
+  if (uniqueFiles.length > 0) {
+    await uploadAll(release.id, uniqueFiles);
+  }
 
   console.log(`Gitee release ready: https://gitee.com/${OWNER}/${REPO}/releases/tag/${tag}`);
 }

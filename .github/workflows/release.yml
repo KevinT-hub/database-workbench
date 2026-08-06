@@ -227,5 +227,6 @@ jobs:
           node scripts/gitee-release.mjs \
             --tag update \
             --dir update-gitee \
+            --replace \
             --title "Auto-update channel" \
             --notes "Auto-generated latest.json for the stable update channel."
