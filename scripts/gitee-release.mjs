@@ -26,6 +26,19 @@ const argValue = (name) => {
   return index >= 0 ? args[index + 1] : undefined;
 };
 
+function walkFiles(dir) {
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkFiles(fullPath));
+    } else if (entry.isFile()) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
 const GITEE_API = 'https://gitee.com/api/v5';
 const TOKEN = process.env.GITEE_ACCESS_TOKEN;
 const OWNER = process.env.GITEE_OWNER || 'kevint-hub';
@@ -123,12 +136,12 @@ async function main() {
   }
   const release = await createRelease(tag, title, notes);
 
-  const files = fs.readdirSync(dir).sort();
+  const files = walkFiles(dir).sort();
   if (files.length === 0) {
     throw new Error(`No files to upload in ${dir}`);
   }
   for (const file of files) {
-    await uploadAttachment(release.id, path.join(dir, file));
+    await uploadAttachment(release.id, file);
   }
 
   console.log(`Gitee release ready: https://gitee.com/${OWNER}/${REPO}/releases/tag/${tag}`);

@@ -147,7 +147,7 @@ jobs:
           merge-multiple: true
 
       - name: Show artifacts
-        run: find artifacts -maxdepth 1 -type f -printf '%f\n' | sort
+        run: find artifacts -type f -printf '%P\n' | sort
 
       - name: Create GitHub release
         run: |
@@ -157,7 +157,13 @@ jobs:
             --target "$GITHUB_SHA" || true
 
       - name: Upload installers to GitHub release
-        run: gh release upload "${{ needs.check-version.outputs.tag }}" artifacts/* --clobber
+        run: |
+          mapfile -t RELEASE_FILES < <(find artifacts -type f | sort)
+          if [ ${#RELEASE_FILES[@]} -eq 0 ]; then
+            echo "::error::No release files found under artifacts/"
+            exit 1
+          fi
+          gh release upload "${{ needs.check-version.outputs.tag }}" "${RELEASE_FILES[@]}" --clobber
 
       - name: Generate latest.json
         run: |

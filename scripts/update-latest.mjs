@@ -56,6 +56,19 @@ function giteeDownloadUrl(tag, fileName) {
   return `https://gitee.com/${GITEE_OWNER}/${GITEE_REPO}/releases/download/${tag}/${encodeURIComponent(fileName)}`;
 }
 
+function walkFiles(dir) {
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkFiles(fullPath));
+    } else if (entry.isFile()) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
 function writeOutputs(version, notes, platforms) {
   const payload = {
     version,
@@ -92,9 +105,10 @@ function buildFromDir(dir, version, tag, notes) {
   }
 
   const platforms = {};
-  const files = fs.readdirSync(dir).sort();
+  const files = walkFiles(dir).sort();
 
-  for (const file of files) {
+  for (const fullPath of files) {
+    const file = path.basename(fullPath);
     if (file.endsWith('.sig') || file === 'latest.json') continue;
     const platform = detectPlatform(file);
     if (!platform) {
@@ -102,7 +116,7 @@ function buildFromDir(dir, version, tag, notes) {
       continue;
     }
 
-    const sigPath = path.join(dir, `${file}.sig`);
+    const sigPath = `${fullPath}.sig`;
     if (!fs.existsSync(sigPath)) {
       throw new Error(`Missing signature file for ${file}: ${sigPath}`);
     }
