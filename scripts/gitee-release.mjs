@@ -125,14 +125,14 @@ async function uploadAttachment(releaseId, filePath) {
     '-L',
     '--fail-with-body',
     '--retry',
-    '3',
-    '--retry-delay',
     '5',
+    '--retry-delay',
+    '10',
     '--retry-all-errors',
     '--connect-timeout',
     '30',
     '--max-time',
-    '1800',
+    '900',
     '-F',
     `access_token=${TOKEN}`,
     '-F',
@@ -148,6 +148,22 @@ async function uploadAttachment(releaseId, filePath) {
     throw new Error(`Upload ${fileName} failed: ${error.message}`);
   }
   console.log(`[ok] uploaded ${fileName}`);
+}
+
+async function uploadAll(releaseId, files) {
+  // Upload in parallel: Gitee is often slow from GitHub-hosted runners and
+  // per-connection throughput is the bottleneck.
+  const concurrency = 3;
+  let index = 0;
+  const worker = async () => {
+    while (index < files.length) {
+      const file = files[index++];
+      await uploadAttachment(releaseId, file);
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, files.length) }, () => worker()),
+  );
 }
 
 async function main() {
@@ -174,12 +190,14 @@ async function main() {
     throw new Error(`No release files to upload in ${dir}`);
   }
   const seen = new Set();
+  const uniqueFiles = [];
   for (const file of files) {
     const name = path.basename(file);
     if (seen.has(name)) continue;
     seen.add(name);
-    await uploadAttachment(release.id, file);
+    uniqueFiles.push(file);
   }
+  await uploadAll(release.id, uniqueFiles);
 
   console.log(`Gitee release ready: https://gitee.com/${OWNER}/${REPO}/releases/tag/${tag}`);
 }
