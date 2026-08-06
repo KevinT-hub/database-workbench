@@ -35,8 +35,8 @@ const GITEE_REPO = process.env.GITEE_REPO || 'database-workbench';
 const PLATFORM_RULES = [
   { re: /_x64-setup\.exe$/, key: 'windows-x86_64' },
   { re: /_arm64-setup\.exe$/, key: 'windows-aarch64' },
-  { re: /_x64\.dmg$/, key: 'darwin-x86_64' },
-  { re: /_aarch64\.dmg$/, key: 'darwin-aarch64' },
+  { re: /_x64\.app\.tar\.gz$/, key: 'darwin-x86_64' },
+  { re: /_aarch64\.app\.tar\.gz$/, key: 'darwin-aarch64' },
   { re: /_amd64\.AppImage$/, key: 'linux-x86_64' },
   { re: /_amd64\.deb$/, key: 'linux-x86_64-deb' },
 ];

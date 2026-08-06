@@ -120,6 +120,8 @@ jobs:
             src-tauri/target/${{ matrix.target }}/release/bundle/msi/*.msi
             src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
             src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.sig
+            src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
+            src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.sig
             src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.deb
             src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.sig
             src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*.rpm
@@ -167,7 +169,7 @@ jobs:
           RELEASE_FILES=()
           for f in "${ALL_FILES[@]}"; do
             case "$f" in
-              *.exe|*.msi|*.dmg|*.deb|*.rpm|*.AppImage|*.sig)
+              *.exe|*.msi|*.dmg|*.deb|*.rpm|*.AppImage|*.app.tar.gz|*.sig)
                 RELEASE_FILES+=("$f")
                 ;;
             esac

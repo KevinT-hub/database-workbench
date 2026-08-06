@@ -40,7 +40,7 @@ function walkFiles(dir) {
 }
 
 function isReleaseFile(filePath) {
-  return /\.(exe|msi|dmg|deb|rpm|AppImage|sig)$/i.test(filePath);
+  return /\.(exe|msi|dmg|deb|rpm|AppImage|tar\.gz|sig)$/i.test(filePath);
 }
 
 const GITEE_API = 'https://gitee.com/api/v5';
