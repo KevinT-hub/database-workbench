@@ -1,20 +1,17 @@
 #!/usr/bin/env node
 /**
- * Generates the Tauri updater `latest.json` for both the GitHub and Gitee
- * channels, mirroring the clash-verge-rev updater-release practice.
+ * Generates the Tauri updater `latest.json` for the GitHub channel,
+ * mirroring the clash-verge-rev updater-release practice.
  *
  * Usage:
  *   node scripts/update-latest.mjs --from-dir <dir> --version <v> --tag <t> [--notes <notes>]
  *   node scripts/update-latest.mjs --from-release [--tag <t>]
  *
  * Outputs:
- *   latest.json               -> latest.json with GitHub download URLs
- *   update-gitee/latest.json  -> latest.json with Gitee download URLs
+ *   latest.json -> latest.json with GitHub download URLs
  *
  * Required env (from-release mode):
  *   GH_TOKEN, GITHUB_OWNER, GITHUB_REPO
- * Optional env:
- *   GITEE_OWNER, GITEE_REPO (used to build Gitee URLs)
  */
 
 import fs from 'node:fs';
@@ -29,8 +26,6 @@ const argValue = (name) => {
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'KevinT-hub';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'database-workbench';
-const GITEE_OWNER = process.env.GITEE_OWNER || 'kevint-hub';
-const GITEE_REPO = process.env.GITEE_REPO || 'database-workbench';
 
 const PLATFORM_RULES = [
   { re: /_x64-setup\.exe$/, key: 'windows-x86_64' },
@@ -50,10 +45,6 @@ function detectPlatform(fileName) {
 
 function githubDownloadUrl(tag, fileName) {
   return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/download/${tag}/${encodeURIComponent(fileName)}`;
-}
-
-function giteeDownloadUrl(tag, fileName) {
-  return `https://gitee.com/${GITEE_OWNER}/${GITEE_REPO}/releases/download/${tag}/${encodeURIComponent(fileName)}`;
 }
 
 function walkFiles(dir) {
@@ -77,23 +68,7 @@ function writeOutputs(version, notes, platforms) {
     platforms,
   };
 
-  const giteePlatforms = {};
-  for (const [key, entry] of Object.entries(platforms)) {
-    giteePlatforms[key] = {
-      signature: entry.signature,
-      url: entry.url.replace(
-        `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/download/`,
-        `https://gitee.com/${GITEE_OWNER}/${GITEE_REPO}/releases/download/`,
-      ),
-    };
-  }
-
-  fs.mkdirSync('update-gitee', { recursive: true });
   fs.writeFileSync('latest.json', `${JSON.stringify(payload, null, 2)}\n`);
-  fs.writeFileSync(
-    'update-gitee/latest.json',
-    `${JSON.stringify({ ...payload, platforms: giteePlatforms }, null, 2)}\n`,
-  );
 
   console.log('Generated latest.json:');
   console.log(JSON.stringify(payload, null, 2));

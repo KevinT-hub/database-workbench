@@ -130,16 +130,13 @@ jobs:
             src-tauri/target/${{ matrix.target }}/release/bundle/appimage/*.sig
 
   release:
-    name: Publish GitHub + Gitee releases
+    name: Publish GitHub release
     needs: [check-version, build]
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_OWNER: KevinT-hub
       GITHUB_REPO: database-workbench
-      GITEE_ACCESS_TOKEN: ${{ secrets.GITEE_ACCESS_TOKEN }}
-      GITEE_OWNER: kevint-hub
-      GITEE_REPO: database-workbench
     steps:
       - uses: actions/checkout@v4
 
@@ -213,20 +210,3 @@ jobs:
             --notes "Auto-generated latest.json for the stable update channel." \
             --target "$GITHUB_SHA" 2>/dev/null || true
           gh release upload update latest.json --clobber
-
-      - name: Mirror installers to Gitee release
-        run: |
-          node scripts/gitee-release.mjs \
-            --tag "${{ needs.check-version.outputs.tag }}" \
-            --dir artifacts \
-            --title "Database Workbench ${{ needs.check-version.outputs.tag }}" \
-            --notes "Release ${{ needs.check-version.outputs.tag }}"
-
-      - name: Mirror latest.json to Gitee update channel
-        run: |
-          node scripts/gitee-release.mjs \
-            --tag update \
-            --dir update-gitee \
-            --replace \
-            --title "Auto-update channel" \
-            --notes "Auto-generated latest.json for the stable update channel."
