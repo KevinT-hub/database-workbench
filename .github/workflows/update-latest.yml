@@ -29,5 +29,8 @@ jobs:
           gh release create update \
             --title "updater" \
             --notes "Release for maintaining latest.json." \
-            --target "$GITHUB_SHA" 2>/dev/null || true
+            --target "$GITHUB_SHA" \
+            --latest=false 2>/dev/null || \
+          gh release edit update --latest=false 2>/dev/null || true
           gh release upload update latest.json --clobber
+          gh release edit update --latest=false

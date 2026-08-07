@@ -184,17 +184,14 @@ jobs:
           gh release create update \
             --title "updater" \
             --notes "Release for maintaining latest.json." \
-            --target "$GITHUB_SHA" 2>/dev/null || true
+            --target "$GITHUB_SHA" \
+            --latest=false 2>/dev/null || \
+          gh release edit update --latest=false 2>/dev/null || true
 
       - name: Create GitHub release
         run: |
           TAG="${{ needs.check-version.outputs.tag }}"
           PRERELEASE="${{ needs.check-version.outputs.prerelease }}"
-          EXTRA_ARGS=()
-          if [ "$PRERELEASE" = "true" ]; then
-            EXTRA_ARGS+=(--prerelease)
-          fi
-
           NOTES_FILE=""
           if [ -f "RELEASE_NOTES_${TAG}.md" ]; then
             NOTES_FILE="RELEASE_NOTES_${TAG}.md"
@@ -202,18 +199,36 @@ jobs:
             NOTES_FILE="RELEASE_NOTES.md"
           fi
 
-          if [ -n "$NOTES_FILE" ]; then
-            gh release create "$TAG" \
-              --title "Database Workbench ${TAG}" \
-              --notes-file "$NOTES_FILE" \
-              --target "$GITHUB_SHA" \
-              "${EXTRA_ARGS[@]}" || true
+          if [ "$PRERELEASE" = "true" ]; then
+            if [ -n "$NOTES_FILE" ]; then
+              gh release create "$TAG" \
+                --title "Database Workbench ${TAG}" \
+                --notes-file "$NOTES_FILE" \
+                --target "$GITHUB_SHA" \
+                --prerelease 2>/dev/null || \
+              gh release edit "$TAG" --prerelease 2>/dev/null || true
+            else
+              gh release create "$TAG" \
+                --title "Database Workbench ${TAG}" \
+                --notes "Release ${TAG}" \
+                --target "$GITHUB_SHA" \
+                --prerelease 2>/dev/null || \
+              gh release edit "$TAG" --prerelease 2>/dev/null || true
+            fi
           else
-            gh release create "$TAG" \
-              --title "Database Workbench ${TAG}" \
-              --notes "Release ${TAG}" \
-              --target "$GITHUB_SHA" \
-              "${EXTRA_ARGS[@]}" || true
+            if [ -n "$NOTES_FILE" ]; then
+              gh release create "$TAG" \
+                --title "Database Workbench ${TAG}" \
+                --notes-file "$NOTES_FILE" \
+                --target "$GITHUB_SHA" 2>/dev/null || \
+              gh release edit "$TAG" --latest 2>/dev/null || true
+            else
+              gh release create "$TAG" \
+                --title "Database Workbench ${TAG}" \
+                --notes "Release ${TAG}" \
+                --target "$GITHUB_SHA" 2>/dev/null || \
+              gh release edit "$TAG" --latest 2>/dev/null || true
+            fi
           fi
 
       - name: Upload installers to GitHub release
@@ -257,9 +272,15 @@ jobs:
             --notes "$NOTES"
 
       - name: Upload latest.json to versioned GitHub release
-        run: gh release upload "${{ needs.check-version.outputs.tag }}" latest.json --clobber
+        run: |
+          TAG="${{ needs.check-version.outputs.tag }}"
+          gh release upload "$TAG" latest.json --clobber
+          if [ "${{ needs.check-version.outputs.prerelease }}" != "true" ]; then
+            gh release edit "$TAG" --latest
+          fi
 
       - name: Upload latest.json to updater release
         if: needs.check-version.outputs.prerelease == 'false'
         run: |
           gh release upload update latest.json --clobber
+          gh release edit update --latest=false
