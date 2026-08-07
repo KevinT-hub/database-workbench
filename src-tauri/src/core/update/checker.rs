@@ -58,6 +58,11 @@ pub async fn check_update() -> Result<UpdateInfo, String> {
                         "Incomplete updater metadata for {platform} in {endpoint}"
                     ));
                 }
+                if !netprobe::is_official_download_url(&entry.url) {
+                    return Err(format!(
+                        "Refusing update URL outside the official GitHub release in {endpoint}"
+                    ));
+                }
 
                 let current = env!("CARGO_PKG_VERSION");
                 let has_update = compare_versions(&json.version, current);

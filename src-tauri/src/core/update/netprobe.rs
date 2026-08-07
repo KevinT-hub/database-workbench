@@ -39,6 +39,12 @@ pub fn github_latest_json_url() -> String {
     )
 }
 
+/// Mirrors must never be allowed to redirect the installer to a third-party
+/// host. Only official GitHub release URLs are accepted as the base URL.
+pub fn is_official_download_url(url: &str) -> bool {
+    url.starts_with(&format!("{}/", github_release_base()))
+}
+
 /// `latest.json` URLs in preference order: GitHub first, then mirrors.
 pub fn latest_json_candidates() -> Vec<String> {
     let primary = github_latest_json_url();

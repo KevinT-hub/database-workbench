@@ -55,6 +55,12 @@ pub async fn download_and_install(app: AppHandle) -> AppResult<()> {
 
     let target = tauri_plugin_updater::target()
         .ok_or_else(|| AppError::Updater("Unsupported update target".into()))?;
+    let download_url = update.download_url.to_string();
+    if !netprobe::is_official_download_url(&download_url) {
+        return Err(AppError::Updater(
+            "Refusing update URL outside the official GitHub release".into(),
+        ));
+    }
     let expected_sha256 = update.raw_json["platforms"][&target]["sha256"]
         .as_str()
         .map(str::to_string)
@@ -109,8 +115,7 @@ pub async fn download_and_install(app: AppHandle) -> AppResult<()> {
         );
     };
 
-    let bytes = download_with_mirrors(update.download_url.as_str(), &expected_sha256, &mut on_chunk)
-        .await?;
+    let bytes = download_with_mirrors(&download_url, &expected_sha256, &mut on_chunk).await?;
 
     let _ = finish_handle.emit(
         "updater-download-progress",

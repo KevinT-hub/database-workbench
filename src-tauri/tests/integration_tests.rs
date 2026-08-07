@@ -1,7 +1,5 @@
 use database_workbench_lib::services::properties;
 use database_workbench_lib::utils::file;
-use std::collections::BTreeMap;
-
 #[test]
 fn test_parse_properties_empty() {
     let result = properties::parse_properties("");
