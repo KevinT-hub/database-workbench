@@ -27,7 +27,7 @@ jobs:
       - name: Upload to GitHub update channel
         run: |
           gh release create update \
-            --title "Auto-update channel" \
-            --notes "Auto-generated latest.json for the stable update channel." \
+            --title "updater" \
+            --notes "Release for maintaining latest.json." \
             --target "$GITHUB_SHA" 2>/dev/null || true
           gh release upload update latest.json --clobber

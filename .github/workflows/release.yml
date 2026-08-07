@@ -24,6 +24,7 @@ jobs:
     outputs:
       tag: ${{ steps.resolve.outputs.tag }}
       version: ${{ steps.resolve.outputs.version }}
+      prerelease: ${{ steps.resolve.outputs.prerelease }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,14 +40,19 @@ jobs:
             TAG="${GITHUB_REF_NAME}"
             VERSION="${TAG#v}"
           fi
+          PRERELEASE="false"
+          case "${TAG,,}" in
+            *-alpha*|*-beta*|*-rc*|*-preview*|*-dev*) PRERELEASE="true" ;;
+          esac
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "prerelease=${PRERELEASE}" >> "$GITHUB_OUTPUT"
 
       - name: Verify tag matches package.json
         if: github.event_name == 'push'
         run: |
           PKG_VERSION=$(jq -r .version package.json)
-          if [ "${GITHUB_REF_NAME}" != "v${PKG_VERSION}" ]; then
+          if [ "${GITHUB_REF_NAME,,}" != "v${PKG_VERSION,,}" ]; then
             echo "::error::Tag ${GITHUB_REF_NAME} does not match package.json version ${PKG_VERSION}"
             exit 1
           fi
@@ -172,12 +178,43 @@ jobs:
       - name: Show artifacts
         run: find artifacts -type f -printf '%P\n' | sort
 
+      - name: Ensure updater release exists
+        if: needs.check-version.outputs.prerelease == 'false'
+        run: |
+          gh release create update \
+            --title "updater" \
+            --notes "Release for maintaining latest.json." \
+            --target "$GITHUB_SHA" 2>/dev/null || true
+
       - name: Create GitHub release
         run: |
-          gh release create "${{ needs.check-version.outputs.tag }}" \
-            --title "Database Workbench ${{ needs.check-version.outputs.tag }}" \
-            --notes-file RELEASE_NOTES.md \
-            --target "$GITHUB_SHA" || true
+          TAG="${{ needs.check-version.outputs.tag }}"
+          PRERELEASE="${{ needs.check-version.outputs.prerelease }}"
+          EXTRA_ARGS=()
+          if [ "$PRERELEASE" = "true" ]; then
+            EXTRA_ARGS+=(--prerelease)
+          fi
+
+          NOTES_FILE=""
+          if [ -f "RELEASE_NOTES_${TAG}.md" ]; then
+            NOTES_FILE="RELEASE_NOTES_${TAG}.md"
+          elif [ -f "RELEASE_NOTES.md" ] && grep -q "${TAG}" RELEASE_NOTES.md; then
+            NOTES_FILE="RELEASE_NOTES.md"
+          fi
+
+          if [ -n "$NOTES_FILE" ]; then
+            gh release create "$TAG" \
+              --title "Database Workbench ${TAG}" \
+              --notes-file "$NOTES_FILE" \
+              --target "$GITHUB_SHA" \
+              "${EXTRA_ARGS[@]}" || true
+          else
+            gh release create "$TAG" \
+              --title "Database Workbench ${TAG}" \
+              --notes "Release ${TAG}" \
+              --target "$GITHUB_SHA" \
+              "${EXTRA_ARGS[@]}" || true
+          fi
 
       - name: Upload installers to GitHub release
         run: |
@@ -222,10 +259,7 @@ jobs:
       - name: Upload latest.json to versioned GitHub release
         run: gh release upload "${{ needs.check-version.outputs.tag }}" latest.json --clobber
 
-      - name: Update GitHub stable channel (update tag)
+      - name: Upload latest.json to updater release
+        if: needs.check-version.outputs.prerelease == 'false'
         run: |
-          gh release create update \
-            --title "Auto-update channel" \
-            --notes "Auto-generated latest.json for the stable update channel." \
-            --target "$GITHUB_SHA" 2>/dev/null || true
           gh release upload update latest.json --clobber

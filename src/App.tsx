@@ -107,7 +107,7 @@ function App() {
             setUpdateAvailable(true, info.version);
           }
         } catch (error) {
-          console.error('Auto update check failed:', error);
+          console.error('Update check failed:', error);
         }
       };
 
