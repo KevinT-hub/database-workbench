@@ -17,7 +17,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Rust](https://img.shields.io/badge/Rust-edition%202021-dea584?logo=rust&logoColor=white)](https://www.rust-lang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078D6?logo=windows&logoColor=white)]()
 
 </div>
 
@@ -70,7 +69,7 @@ A modern, lightweight database management desktop client built with **Tauri v2 +
 - **Favorites** — Bookmark SQL queries, connection profiles, and database objects.
 - **Notification center** — History of operations with unread indicators and one-click clear.
 - **Execution log dock** — Real-time, backend-pushed SQL execution events with filtering and paging.
-- **Auto-update** — GitHub-first update source selection with China mirror fallback and SHA-256 verification.
+- **Update** — GitHub-first update source selection with China mirror fallback and SHA-256 verification.
 - **Internationalization** — Simplified Chinese (`zh-CN`) and English (`en-US`).
 - **Themes** — Light / dark theme switching.
 - **Keyboard shortcuts** — Extensive shortcut support (see the in-app shortcuts dialog).

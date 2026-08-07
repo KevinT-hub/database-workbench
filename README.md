@@ -17,7 +17,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Rust](https://img.shields.io/badge/Rust-edition%202021-dea584?logo=rust&logoColor=white)](https://www.rust-lang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078D6?logo=windows&logoColor=white)]()
 
 </div>
 
@@ -70,7 +69,7 @@
 - **收藏夹** — 收藏 SQL 查询、连接配置与数据库对象。
 - **通知中心** — 记录操作历史，支持未读提示与一键清空。
 - **执行日志 Dock** — 实时展示后端推送的 SQL 执行事件，支持筛选与分页。
-- **自动更新** — GitHub 优先、国内镜像轮询、SHA-256 校验，并显示下载进度。
+- **软件更新** — GitHub 优先、国内镜像轮询、SHA-256 校验，并显示下载进度。
 - **国际化** — 支持简体中文（`zh-CN`）与英文（`en-US`）。
 - **主题切换** — 支持浅色 / 深色主题。
 - **快捷键** — 丰富的键盘快捷键支持（见应用内快捷键对话框）。
