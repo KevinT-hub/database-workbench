@@ -185,8 +185,9 @@ jobs:
             --title "updater" \
             --notes "Release for maintaining latest.json." \
             --target "$GITHUB_SHA" \
+            --prerelease \
             --latest=false 2>/dev/null || \
-          gh release edit update --latest=false 2>/dev/null || true
+          gh release edit update --prerelease --latest=false 2>/dev/null || true
 
       - name: Create GitHub release
         run: |
@@ -283,4 +284,4 @@ jobs:
         if: needs.check-version.outputs.prerelease == 'false'
         run: |
           gh release upload update latest.json --clobber
-          gh release edit update --latest=false
+          gh release edit update --prerelease --latest=false
