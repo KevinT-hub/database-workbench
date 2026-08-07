@@ -5,9 +5,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { save } from '@tauri-apps/plugin-dialog';
 import { writeTextFile } from '@tauri-apps/plugin-fs';
-import { relaunch } from '@tauri-apps/plugin-process';
 import { useAppStore, useConnectionStore } from '@/stores';
-import { appApi } from '@/api/app';
 
 export interface ConfirmDialogState {
   isOpen: boolean;
@@ -45,8 +43,6 @@ export interface MenuDialogsState {
   handleConfirmDialogConfirm: () => void;
   handleConfirmDialogCancel: () => void;
   handleConfirmExportConnections: () => Promise<void>;
-  /** 失效运行时缓存并重启（确认 → 执行 → 状态提示） */
-  invalidateRuntimeCache: () => Promise<void>;
 }
 
 export const useMenuDialogs = (): MenuDialogsState => {
@@ -144,26 +140,6 @@ export const useMenuDialogs = (): MenuDialogsState => {
     }
   }, [connections, exportSelection, setStatusMessage, t]);
 
-  const invalidateRuntimeCache = useCallback(async () => {
-    const confirmed = await askForConfirm({
-      title: t('menu.file.invalidateCacheConfirmTitle'),
-      message: t('menu.file.invalidateCacheConfirmMessage'),
-      intent: 'warning',
-    });
-
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-      await appApi.invalidateRuntimeCache();
-      setStatusMessage(t('menu.file.invalidateCacheDone'));
-      await relaunch();
-    } catch (error) {
-      setStatusMessage(`${t('menu.file.invalidateCacheFailed')}: ${error}`);
-    }
-  }, [askForConfirm, setStatusMessage, t]);
-
   return {
     isFavoritesDialogOpen,
     setIsFavoritesDialogOpen,
@@ -193,6 +169,5 @@ export const useMenuDialogs = (): MenuDialogsState => {
     handleConfirmDialogConfirm,
     handleConfirmDialogCancel,
     handleConfirmExportConnections,
-    invalidateRuntimeCache,
   };
 };

@@ -18,8 +18,3 @@ pub fn app_config_flush(cache: State<'_, ConfigCache>) -> AppResult<()> {
     cache.flush();
     Ok(())
 }
-
-#[tauri::command]
-pub fn app_invalidate_runtime_cache() -> AppResult<()> {
-    Ok(())
-}

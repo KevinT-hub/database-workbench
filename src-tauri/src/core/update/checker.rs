@@ -1,24 +1,23 @@
 use std::collections::HashMap;
+use std::time::Duration;
+
 use serde::{Deserialize, Serialize};
 
-use super::endpoints;
-
-const WINDOWS_TARGET: &str = "windows-x86_64";
+use super::netprobe;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct RegionUpdateInfo {
+pub struct UpdateInfo {
     pub available: bool,
     pub version: String,
-    #[serde(rename = "downloadUrl")]
-    pub download_url: String,
     #[serde(rename = "body")]
     pub notes: String,
     #[serde(rename = "date")]
     pub published_at: String,
-    #[serde(rename = "preferredSource")]
-    pub preferred_source: String,
-    #[serde(rename = "countryCode")]
-    pub country_code: String,
+    #[serde(rename = "downloadUrl")]
+    pub download_url: String,
+    pub sha256: String,
+    #[serde(rename = "source")]
+    pub source: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -37,56 +36,94 @@ struct PlatformEntry {
     #[serde(default)]
     url: String,
     #[serde(default)]
-    #[allow(dead_code)]
     signature: String,
+    #[serde(default)]
+    sha256: String,
 }
 
-pub async fn check_update(country_code: &str) -> Result<RegionUpdateInfo, String> {
-    let is_china = country_code == "CN";
+/// Checks the stable update channel. GitHub is tried first; the verified
+/// mirrors are only used when GitHub is unreachable or too slow.
+pub async fn check_update() -> Result<UpdateInfo, String> {
+    let platform = current_platform_key();
+    let mut last_error = None;
 
-    if is_china {
-        let result = check_source(&endpoints::gitee_latest_json_url(), "gitee").await;
-        if result.is_ok() {
-            return result;
+    for endpoint in netprobe::latest_json_candidates() {
+        match fetch_latest_json(&endpoint).await {
+            Ok(json) => {
+                let entry = json.platforms.get(platform).ok_or_else(|| {
+                    format!("No updater entry for platform {platform} in {endpoint}")
+                })?;
+                if entry.url.is_empty() || entry.signature.is_empty() || entry.sha256.is_empty() {
+                    return Err(format!(
+                        "Incomplete updater metadata for {platform} in {endpoint}"
+                    ));
+                }
+
+                let current = env!("CARGO_PKG_VERSION");
+                let has_update = compare_versions(&json.version, current);
+                return Ok(UpdateInfo {
+                    available: has_update,
+                    version: json.version,
+                    notes: json.notes,
+                    published_at: json.pub_date,
+                    download_url: entry.url.clone(),
+                    sha256: entry.sha256.clone(),
+                    source: endpoint,
+                });
+            }
+            Err(error) => {
+                last_error = Some(error);
+            }
         }
-        check_source(&endpoints::github_latest_json_url(), "github-fallback").await
-    } else {
-        let result = check_source(&endpoints::github_latest_json_url(), "github").await;
-        if result.is_ok() {
-            return result;
-        }
-        check_source(&endpoints::gitee_latest_json_url(), "gitee-fallback").await
     }
+
+    Err(last_error.unwrap_or_else(|| "No update endpoint available".into()))
 }
 
-async fn check_source(endpoint: &str, source: &str) -> Result<RegionUpdateInfo, String> {
+async fn fetch_latest_json(endpoint: &str) -> Result<LatestJson, String> {
     let client = reqwest::Client::builder()
         .user_agent("database-workbench")
-        .timeout(std::time::Duration::from_secs(10))
+        .timeout(Duration::from_secs(8))
         .build()
         .map_err(|e| e.to_string())?;
     let resp = client.get(endpoint).send().await.map_err(|e| e.to_string())?;
     if !resp.status().is_success() {
         return Err(format!("HTTP {}", resp.status()));
     }
-    let json: LatestJson = resp.json().await.map_err(|e| e.to_string())?;
-    let current = env!("CARGO_PKG_VERSION");
-    let has_update = compare_versions(&json.version, current);
-    let download_url = json
-        .platforms
-        .get(WINDOWS_TARGET)
-        .map(|p| p.url.clone())
-        .unwrap_or_default();
+    resp.json().await.map_err(|e| e.to_string())
+}
 
-    Ok(RegionUpdateInfo {
-        available: has_update,
-        version: json.version,
-        download_url,
-        notes: json.notes,
-        published_at: json.pub_date,
-        preferred_source: source.to_string(),
-        country_code: String::new(),
-    })
+fn current_platform_key() -> &'static str {
+    #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
+    {
+        "windows-x86_64"
+    }
+    #[cfg(all(target_os = "macos", target_arch = "x86_64"))]
+    {
+        "darwin-x86_64"
+    }
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    {
+        "darwin-aarch64"
+    }
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    {
+        "linux-x86_64"
+    }
+    #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
+    {
+        "linux-aarch64"
+    }
+    #[cfg(not(any(
+        all(target_os = "windows", target_arch = "x86_64"),
+        all(target_os = "macos", target_arch = "x86_64"),
+        all(target_os = "macos", target_arch = "aarch64"),
+        all(target_os = "linux", target_arch = "x86_64"),
+        all(target_os = "linux", target_arch = "aarch64")
+    )))]
+    {
+        "windows-x86_64"
+    }
 }
 
 fn compare_versions(latest: &str, current: &str) -> bool {

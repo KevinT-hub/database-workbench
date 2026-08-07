@@ -26,7 +26,6 @@ export const getMenuConfig = (t: TFunction): MenuConfig[] => [
       { divider: true, label: '' },
       { label: t('menu.file.save'), shortcut: 'Ctrl+S' },
       { label: t('menu.file.saveAs'), shortcut: 'Ctrl+Alt+S' },
-      { label: t('menu.file.invalidateCache') },
       { divider: true, label: '' },
       { label: t('menu.file.exit'), shortcut: 'Alt+F4' },
     ],

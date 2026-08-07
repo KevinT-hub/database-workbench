@@ -70,7 +70,7 @@ A modern, lightweight database management desktop client built with **Tauri v2 +
 - **Favorites** — Bookmark SQL queries, connection profiles, and database objects.
 - **Notification center** — History of operations with unread indicators and one-click clear.
 - **Execution log dock** — Real-time, backend-pushed SQL execution events with filtering and paging.
-- **Auto-update** — Region-aware update source selection (GitHub / Gitee) with download progress.
+- **Auto-update** — GitHub-first update source selection with China mirror fallback and SHA-256 verification.
 - **Internationalization** — Simplified Chinese (`zh-CN`) and English (`en-US`).
 - **Themes** — Light / dark theme switching.
 - **Keyboard shortcuts** — Extensive shortcut support (see the in-app shortcuts dialog).
@@ -95,7 +95,7 @@ A modern, lightweight database management desktop client built with **Tauri v2 +
 | Pooling   | `sqlx` native pools managed via a `DashMap`-backed connection registry with background keepalive |
 | SQL parse | [`sqlparser`](https://github.com/apache/datafusion-sqlparser-rs) (statement splitting) |
 | Office    | `calamine` (read Excel) / `rust_xlsxwriter` (write Excel), `csv`, `chrono`, `flate2` (gzip) |
-| Runtime   | Tokio (multi-thread), `cron` (scheduling), `reqwest` + `rustls` (updater/geo) |
+| Runtime   | Tokio (multi-thread), `cron` (scheduling), `reqwest` + `rustls` (updater/netprobe) |
 | Plugins   | Tauri plugins: `dialog`, `fs`, `opener`, `process`, `shell`, `updater` |
 
 ---
@@ -142,7 +142,7 @@ flowchart LR
   - `metadata/` — Schema introspection (tables, views, routines, columns, FKs, indexes, triggers, checks, DDL).
   - `backup_restore/` — Native dump/restore plus a `cron`-based scheduler.
   - `import_export/` — CSV / JSON / JSONL / XLSX / SQL / XML / HTML / TXT readers & writers.
-  - `update/` — Region-aware updater (geo country-code cache, checker, downloader).
+  - `update/` — GitHub-first updater with mirror probing, checker and downloader.
   - `user/` — User and privilege management.
 - `models/` — Serde DTOs shared across commands. `services/` — App config cache, favorites store, session logger, and legacy-data migration. `utils/` — SQL/JSON/file/error helpers.
 
@@ -316,4 +316,3 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 ## Links
 
 - GitHub：[KevinT-hub/database-workbench](https://github.com/KevinT-hub/database-workbench)
-- Gitee：[KevinT-hub/database-workbench](https://gitee.com/kevint-hub/database-workbench)

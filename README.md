@@ -70,7 +70,7 @@
 - **收藏夹** — 收藏 SQL 查询、连接配置与数据库对象。
 - **通知中心** — 记录操作历史，支持未读提示与一键清空。
 - **执行日志 Dock** — 实时展示后端推送的 SQL 执行事件，支持筛选与分页。
-- **自动更新** — 区域感知的更新源选择（GitHub / Gitee），并显示下载进度。
+- **自动更新** — GitHub 优先、国内镜像轮询、SHA-256 校验，并显示下载进度。
 - **国际化** — 支持简体中文（`zh-CN`）与英文（`en-US`）。
 - **主题切换** — 支持浅色 / 深色主题。
 - **快捷键** — 丰富的键盘快捷键支持（见应用内快捷键对话框）。
@@ -142,7 +142,7 @@ flowchart LR
   - `metadata/` — 模式 introspection（表、视图、例程、列、外键、索引、触发器、检查约束、DDL）。
   - `backup_restore/` — 原生导出 / 恢复，以及基于 `cron` 的调度器。
   - `import_export/` — CSV / JSON / JSONL / XLSX / SQL / XML / HTML / TXT 的读写。
-  - `update/` — 区域感知的更新器（地理国家码缓存、检查器、下载器）。
+  - `update/` — GitHub 优先 + 镜像轮询更新器（网络探测、检查器、下载器）。
   - `user/` — 用户与权限管理。
 - `models/` — 跨命令共享的 Serde DTO。`services/` — 应用配置缓存、收藏夹存储、会话日志、遗留数据迁移。`utils/` — SQL/JSON/文件/错误辅助函数。
 
@@ -316,4 +316,3 @@ MySQL 连接支持以下参数：
 ## 相关链接
 
 - GitHub：[KevinT-hub/database-workbench](https://github.com/KevinT-hub/database-workbench)
-- Gitee：[KevinT-hub/database-workbench](https://gitee.com/kevint-hub/database-workbench)

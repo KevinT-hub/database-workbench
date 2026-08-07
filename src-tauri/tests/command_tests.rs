@@ -10,7 +10,6 @@ use database_workbench_lib::core::import_export;
 use database_workbench_lib::core::pool::manager::PoolRegistry;
 use database_workbench_lib::core::query::session::SqlSplitSessionStore;
 use database_workbench_lib::core::backup_restore::scheduler::SchedulerHandle;
-use database_workbench_lib::core::update::geo::CountryCodeCache;
 use database_workbench_lib::services;
 
 // ===== Command Result Type Verification =====

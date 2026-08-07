@@ -204,14 +204,6 @@ fn test_scheduler_handle() {
 }
 
 #[test]
-fn test_country_code_cache() {
-    let cache = database_workbench_lib::core::update::geo::CountryCodeCache::new();
-    assert!(cache.get().is_none());
-    cache.set("CN".into());
-    assert_eq!(cache.get().unwrap(), "CN");
-}
-
-#[test]
 fn test_export_format_parse() {
     use database_workbench_lib::core::import_export::{ExportFormat, ImportFormat};
     assert!(ExportFormat::from_str("csv").is_some());

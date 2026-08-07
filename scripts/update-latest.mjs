@@ -9,7 +9,7 @@
  *
  * Outputs:
  *   latest.json by default, or the path passed via --output.
- *   Download URLs default to GitHub; pass --base-url to generate a Gitee channel.
+ *   Download URLs default to GitHub; pass --base-url to use a custom base URL.
  *
  * Required env (from-release mode):
  *   GH_TOKEN, GITHUB_OWNER, GITHUB_REPO
@@ -17,6 +17,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
@@ -109,6 +110,7 @@ function buildFromDir(dir, version, tag, notes, baseUrl, outputPath, pubDate) {
 
     platforms[platform] = {
       signature,
+      sha256: createHash('sha256').update(fs.readFileSync(fullPath)).digest('hex'),
       url: releaseDownloadUrl(tag, file, baseUrl),
     };
     console.log(`[ok] ${platform} <- ${file}`);
@@ -160,7 +162,7 @@ async function buildFromRelease(tag) {
     'api',
     `repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tags/${resolvedTag}`,
     '--jq',
-    '{tag_name, body, published_at, assets: [.assets[] | {name, browser_download_url}]}',
+    '{tag_name, body, published_at, assets: [.assets[] | {name, browser_download_url, digest}]}',
   ]);
   const release = JSON.parse(releaseJson);
   const notes = release.body || `Release ${version}`;
@@ -179,9 +181,14 @@ async function buildFromRelease(tag) {
       throw new Error(`Missing signature asset for ${asset.name}`);
     }
     const signature = await fetchSignature(sigAsset.browser_download_url);
+    const digest = String(asset.digest || '').replace(/^sha256:/i, '');
+    if (!digest) {
+      throw new Error(`Missing sha256 digest for ${asset.name}`);
+    }
 
     platforms[platform] = {
       signature,
+      sha256: digest,
       url: releaseDownloadUrl(resolvedTag, asset.name, BASE_URL),
     };
     console.log(`[ok] ${platform} <- ${asset.name}`);

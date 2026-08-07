@@ -8,8 +8,6 @@ export interface UpdateInfo {
   date?: string;
   body?: string;
   downloadUrl?: string;
-  preferredSource?: 'github' | 'gitee' | 'github-fallback' | 'gitee-fallback';
-  countryCode?: string;
 }
 
 interface BackendUpdateInfo {
@@ -18,8 +16,6 @@ interface BackendUpdateInfo {
   date?: string;
   body?: string;
   downloadUrl?: string;
-  preferredSource?: 'github' | 'gitee' | 'github-fallback' | 'gitee-fallback';
-  countryCode?: string;
 }
 
 const fromBackendUpdateInfo = (raw: BackendUpdateInfo): UpdateInfo => ({
@@ -28,16 +24,14 @@ const fromBackendUpdateInfo = (raw: BackendUpdateInfo): UpdateInfo => ({
   date: raw.date,
   body: raw.body,
   downloadUrl: raw.downloadUrl,
-  preferredSource: raw.preferredSource,
-  countryCode: raw.countryCode,
 });
 
 export const updaterApi = {
-  checkByRegion: (): Promise<UpdateInfo> =>
-    invoke<BackendUpdateInfo>('updater_check_by_region').then(
+  check: (): Promise<UpdateInfo> =>
+    invoke<BackendUpdateInfo>('updater_check').then(
       fromBackendUpdateInfo,
     ),
 
-  downloadAndInstallByRegion: (): Promise<void> =>
-    invoke<void>('updater_download_and_install_by_region'),
+  downloadAndInstall: (): Promise<void> =>
+    invoke<void>('updater_download_and_install'),
 };

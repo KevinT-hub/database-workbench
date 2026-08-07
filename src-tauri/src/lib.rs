@@ -21,21 +21,10 @@ pub fn run() {
             app.manage(core::pool::manager::PoolRegistry::new());
             app.manage(core::pool::keepalive::KeepaliveManager::new(30));
             app.manage(core::backup_restore::scheduler::SchedulerHandle::new());
-            app.manage(core::update::geo::CountryCodeCache::new());
             app.manage(core::query::session::SqlSplitSessionStore::new());
             app.manage(services::app_config::ConfigCache::new());
             app.manage(services::session_log::SessionLogger::new()?);
             app.manage(services::favorites::FavoritesStore::new());
-            let handle = app.handle().clone();
-            tauri::async_runtime::spawn(async move {
-                if let Ok(code) = core::update::geo::warmup_cache().await {
-                    if let Some(cache) =
-                        handle.try_state::<core::update::geo::CountryCodeCache>()
-                    {
-                        cache.set(code);
-                    }
-                }
-            });
             Ok(())
         })
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -67,10 +56,10 @@ pub fn run() {
             commands::sql_utils::sql_format, commands::sql_utils::sql_extract_view_select, commands::sql_utils::sql_split_statements,
             // json (1)
             commands::json::json_parse_canonical,
-            // app (4)
-            commands::app::app_config_get, commands::app::app_config_set, commands::app::app_config_flush, commands::app::app_invalidate_runtime_cache,
+            // app (3)
+            commands::app::app_config_get, commands::app::app_config_set, commands::app::app_config_flush,
             // updater (2)
-            commands::updater::updater_check_by_region, commands::updater::updater_download_and_install_by_region,
+            commands::updater::updater_check, commands::updater::updater_download_and_install,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -7,11 +7,6 @@
       "open": "打开 SQL 文件...",
       "save": "保存",
       "saveAs": "另存为...",
-      "invalidateCache": "使缓存失效",
-      "invalidateCacheConfirmTitle": "使缓存失效",
-      "invalidateCacheConfirmMessage": "此操作将清理 .database-workbench/cache 下的缓存文件，并在确认后重启应用。\n不会影响数据源、连接配置等关键信息。\n\n是否继续？",
-      "invalidateCacheDone": "缓存已失效，应用即将重启...",
-      "invalidateCacheFailed": "使缓存失效失败",
       "exit": "退出"
     },
     "edit": {

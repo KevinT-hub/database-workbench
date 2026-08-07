@@ -22,7 +22,7 @@ interface BackendDownloadProgressEvent {
 class UpdaterServiceClass {
   async checkForUpdate(): Promise<UpdateInfo | null> {
     try {
-      const update = await updaterApi.checkByRegion();
+      const update = await updaterApi.check();
       if (update.available) {
         return {
           available: true,
@@ -30,15 +30,11 @@ class UpdaterServiceClass {
           date: update.date,
           body: update.body,
           downloadUrl: update.downloadUrl,
-          preferredSource: update.preferredSource,
-          countryCode: update.countryCode,
         };
       }
 
       return {
         available: false,
-        preferredSource: update.preferredSource,
-        countryCode: update.countryCode,
       };
     } catch (error) {
       console.error('Failed to check for updates:', error);
@@ -72,7 +68,7 @@ class UpdaterServiceClass {
         }
       );
 
-      await updaterApi.downloadAndInstallByRegion();
+      await updaterApi.downloadAndInstall();
 
       if (unlisten) {
         unlisten();

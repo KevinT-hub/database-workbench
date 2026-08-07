@@ -63,7 +63,6 @@ export const MenuBar: React.FC = () => {
     setIsRestoreDialogOpen,
     setIsExportConnectionsDialogOpen,
     askForConfirm,
-    invalidateRuntimeCache,
   } = dialogs;
 
   // 获取菜单配置
@@ -253,11 +252,6 @@ export const MenuBar: React.FC = () => {
   const handleExit = useCallback(async () => {
     await exit(0);
   }, []);
-
-  const handleInvalidateCache = useCallback(async () => {
-    await invalidateRuntimeCache();
-    setActiveMenu(null);
-  }, [invalidateRuntimeCache]);
 
   // 编辑菜单操作
   const handleUndo = useCallback(() => {
@@ -575,10 +569,6 @@ export const MenuBar: React.FC = () => {
     }
     if (label === t('menu.file.saveAs')) {
       handleSaveAs();
-      return;
-    }
-    if (label === t('menu.file.invalidateCache')) {
-      handleInvalidateCache();
       return;
     }
     if (label === t('menu.file.exit')) {

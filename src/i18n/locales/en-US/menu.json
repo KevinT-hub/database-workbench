@@ -7,11 +7,6 @@
       "open": "Open SQL File...",
       "save": "Save",
       "saveAs": "Save As...",
-      "invalidateCache": "Invalidate Cache",
-      "invalidateCacheConfirmTitle": "Invalidate Cache",
-      "invalidateCacheConfirmMessage": "This action clears cache files under .database-workbench/cache and restarts the app after confirmation.\nCritical data such as data sources and connection profiles will not be affected.\n\nContinue?",
-      "invalidateCacheDone": "Cache invalidated. Restarting application...",
-      "invalidateCacheFailed": "Failed to invalidate cache",
       "exit": "Exit"
     },
     "edit": {
